@@ -1,0 +1,15 @@
+[
+    {
+      "id": 1,
+      "title": "Topic 1",
+      "description": "Description for Topic 1.",
+      "imageUrl": "https://example.com/topic1.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Topic 2",
+      "description": "Description for Topic 2.",
+      "imageUrl": "https://example.com/topic2.jpg"
+    }
+  ]
+  
