@@ -1,4 +1,6 @@
 // A filter to display different categories
+'use client'
+
 import React, { useState, useEffect } from 'react';
 
 const CategoryDropdown = ({ onSelect }) => {
