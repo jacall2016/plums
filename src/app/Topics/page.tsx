@@ -14,7 +14,7 @@ export default function Topics() {
     <main>
       <div id="categoryDropdown">
         <h1>Your Page</h1>
-        <CategoryDropdown onSelect={handleCategorySelect} />
+        {/* <CategoryDropdown onSelect={handleCategorySelect} /> */}
         {/* Add other content based on the selected category */}
       </div>
 
