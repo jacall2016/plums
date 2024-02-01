@@ -1,5 +1,5 @@
 import Image from "next/image";
-import TopicCard from '../../components/topicCard';
+import TopicCardList from '../../components/topicsCardList';
 import React from 'react';
 import CategoryDropdown from '../../components/CategoryDropdown';
 
@@ -19,7 +19,7 @@ export default function Topics() {
       </div>
 
       <div id="topics">
-        <TopicCard/>
+        <TopicCardList/>
       </div>
     </main>
   );
