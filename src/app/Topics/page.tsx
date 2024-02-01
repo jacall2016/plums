@@ -1,7 +1,7 @@
 import Image from "next/image";
 import TopicCardList from '../../components/topicsCardList';
 import React from 'react';
-import CategoryDropdown from '../../components/CategoryDropdown';
+import CategoryDropdown from '../../components/catagory/categoryDropdown';
 
 
 export default function Topics() {
