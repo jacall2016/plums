@@ -1,6 +1,6 @@
 // A filter to display different categories
 'use client'
-
+/*
 import categoriesData from '../data/categories.json';
 import React, { useState, useEffect } from 'react';
 
@@ -49,5 +49,33 @@ const CategoryDropdown = ({ onSelect }) => {
     </select>
   );
 };
+
+export default CategoryDropdown;
+
+*/
+import React, { useState } from 'react';
+
+function CategoryDropdown({ categories, onSelect }) {
+  const [selectedCategory, setSelectedCategory] = useState('');
+
+  const handleCategoryChange = (event) => {
+    const category = event.target.value;
+    setSelectedCategory(category);
+    onSelect(category);
+  };
+
+  return (
+    <div>
+      <select value={selectedCategory} onChange={handleCategoryChange}>
+        <option value="">Select a Category</option>
+        {categories.map((category) => (
+          <option key={category} value={category}>
+            {category}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
 
 export default CategoryDropdown;

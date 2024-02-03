@@ -1,4 +1,6 @@
 'use client'
+import React from 'react';
+
 //   const [topics, setTopics] = useState([]);
 //   const [loading, setLoading] = useState(true);
 //   const [error, setError] = useState(null);
@@ -30,7 +32,7 @@
 //   if (error) {
 //     return <p>Error: {error.message}</p>;
 //   }
-
+/*
 import React from 'react';
 
 const TopicCard = ({ title, description, imageUrl }) => {
@@ -46,4 +48,20 @@ const TopicCard = ({ title, description, imageUrl }) => {
 };
 
 export default TopicCard;
+*/
 
+import EditTopicButton from './editTopicButton';
+import DeleteTopicButton from './deleteTopicButton';
+
+function TopicCard({ title, onEdit, onDelete }) {
+  return (
+    <div>
+      <h2>{title}</h2>
+      {/* Display other content related to the Topic file */}
+      <EditTopicButton onClick={onEdit} />
+      <DeleteTopicButton onClick={onDelete} />
+    </div>
+  );
+}
+
+export default TopicCard;
