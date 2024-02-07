@@ -2,7 +2,7 @@
 
 import React from 'react';
 import TopicCard from './TopicCard';  // Import the individual card component
-import topicsData from '../data/topics.json';
+import topicsData from '../../data/topics.json';
 
 const TopicCardList = () => {
   return (
