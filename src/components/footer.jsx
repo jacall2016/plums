@@ -3,7 +3,7 @@
 function Footer(){
 
 return (
-        <footer className="relative h-48 mt-20 bg-gray-900 bg-opacity-50 flex items-center justify-between overflow-hidden text-white w-full">
+        <footer className="relative h-48 mt-20 bg-purple-900 flex items-center justify-between overflow-hidden text-white w-full">
           <div className="w-1/3 h-full flex">
             <div className="flex">
               <div className="w-full p-4 sm:flex sm:flex-col sm:items-start sm:ml-10 mt-10">
@@ -17,7 +17,7 @@ return (
             </div>
           </div>
 
-          <div className="absolute top-0 right-0 bottom-0 w-2/5 bg-gray-900 transform origin-bottom-right -skew-x-12 overflow-hidden text-xs">
+          <div className="absolute top-0 right-0 bottom-0 w-2/5 bg-purple-900 transform origin-bottom-right -skew-x-12 overflow-hidden text-xs">
             <div className="flex">
               <div className="imagegrid grid-cols-2 grid-rows-2 transform skew-x-12 mt-8 ml-6 hidden md:grid w-auto">
                 <div className="flex items-center justify-center skew-center -mb-6">
