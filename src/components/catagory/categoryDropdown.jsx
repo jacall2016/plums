@@ -51,32 +51,3 @@ const CategoryDropdown = () => {
 };
 
 export default CategoryDropdown;
-
-*/
-import React, { useState } from 'react';
-import categoriesData from '../data/categories.json';
-
-function CategoryDropdown({ categories, onSelect }) {
-  const [selectedCategory, setSelectedCategory] = useState('');
-
-  const handleCategoryChange = (event) => {
-    const category = event.target.value;
-    setSelectedCategory(category);
-    onSelect(category);
-  };
-
-  return (
-    <div>
-      <select value={selectedCategory} onChange={handleCategoryChange}>
-        <option value="">Select a Category</option>
-        {categories.map((category) => (
-          <option key={category} value={category}>
-            {category}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-}
-
-export default CategoryDropdown;
