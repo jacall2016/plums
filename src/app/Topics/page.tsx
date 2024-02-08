@@ -1,5 +1,5 @@
 import Image from "next/image";
-import TopicCardList from '../../components/topicsCardList';
+import TopicCardList from '../../components/topic/topicsCardList';
 import React from 'react';
 import CategoryDropdown from '../../components/catagory/categoryDropdown';
 

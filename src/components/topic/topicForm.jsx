@@ -2,7 +2,6 @@
 import React from 'react';
 
 function topicForm({ onSubmit }) {
-    const [selectedFile] = useState(null);
     const [title, setTitle] = useState('');
   
     const handleTitleChange = (event) => {

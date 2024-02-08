@@ -54,6 +54,7 @@ export default CategoryDropdown;
 
 */
 import React, { useState } from 'react';
+import categoriesData from '../data/categories.json';
 
 function CategoryDropdown({ categories, onSelect }) {
   const [selectedCategory, setSelectedCategory] = useState('');

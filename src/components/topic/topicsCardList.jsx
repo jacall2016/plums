@@ -1,8 +1,8 @@
 'use client'
 
 import React from 'react';
-import TopicCard from './TopicCard';  // Import the individual card component
-import topicsData from '../data/topics.json';
+import TopicCard from 'topicCard';  // Import the individual card component
+import topicsData from '../../data/topics.json';
 
 const TopicCardList = () => {
   return (

@@ -55,12 +55,14 @@ import DeleteTopicButton from './deleteTopicButton';
 
 function TopicCard({ title, onEdit, onDelete }) {
   return (
-    <div>
-      <h2>{title}</h2>
-      {/* Display other content related to the Topic file */}
-      <EditTopicButton onClick={onEdit} />
-      <DeleteTopicButton onClick={onDelete} />
-    </div>
+    <a href="">
+      <div>
+        <h2>{title}</h2>
+        {/* Display other content related to the Topic file */}
+        <EditTopicButton onClick={onEdit} />
+        <DeleteTopicButton onClick={onDelete} />
+      </div>
+    </a>
   );
 }
 
