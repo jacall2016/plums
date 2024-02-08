@@ -1,10 +1,10 @@
 // A filter to display different categories
 'use client'
-/*
-import categoriesData from '../data/categories.json';
+
+import categoriesData from '../../data/categories.json';
 import React, { useState, useEffect } from 'react';
 
-const CategoryDropdown = ({ onSelect }) => {
+const CategoryDropdown = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

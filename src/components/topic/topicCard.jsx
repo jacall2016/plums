@@ -33,17 +33,23 @@ import React from 'react';
 //     return <p>Error: {error.message}</p>;
 //   }
 /*
-import React from 'react';
 
-const TopicCard = ({ title, description, imageUrl }) => {
+
+import React from 'react';
+import Link from 'next/link';
+
+const TopicCard = ({ key, customKey, title, description }) => {
   return (
-    <div className="bg-white border rounded-md overflow-hidden shadow-md transition-transform transform hover:scale-105">
-      <img src={imageUrl} alt={title} className="w-full h-40 object-cover" />
-      <div className="p-4">
-        <h3 className="text-xl font-semibold">{title}</h3>
-        <p className="text-gray-600">{description}</p>
+    <Link href={`/Topics/${customKey}`}>
+
+      <div className="bg-white border rounded-md overflow-hidden shadow-md transition-transform transform hover:scale-105">
+          <div className="p-4">
+            <h3 className="text-xl font-semibold">{title}</h3>
+            <p className="text-gray-600">{description}</p>
+          </div>
       </div>
-    </div>
+    </Link>
+
   );
 };
 

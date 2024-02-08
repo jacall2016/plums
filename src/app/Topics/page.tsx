@@ -11,14 +11,13 @@ export default function Topics() {
   };
   
   return (
-    <main>
-      <div id="categoryDropdown">
-        <h1>Your Page</h1>
-        {/* <CategoryDropdown onSelect={handleCategorySelect} /> */}
-        {/* Add other content based on the selected category */}
+    <main className="mt-32 text-center">
+      <h1 className="text-4xl text-white">Topics</h1>
+      <div id="categoryDropdown" className="mt-4">
+        <CategoryDropdown/>
       </div>
 
-      <div id="topics">
+      <div id="topics" className="mt-8">
         <TopicCardList/>
       </div>
     </main>
