@@ -3,6 +3,8 @@
 
 import React from 'react';
 import Link from 'next/link';
+import deleteTopicButton from './deleteTopicButton.jsx'
+import editTopicButton from './editTopicButton.jsx'
 
 const TopicCard = ({ key, customKey, title, description }) => {
   return (
@@ -12,6 +14,10 @@ const TopicCard = ({ key, customKey, title, description }) => {
           <div className="p-4">
             <h3 className="text-xl font-semibold">{title}</h3>
             <p className="text-gray-600">{description}</p>
+          </div>
+          <div>
+            <deleteTopicButton />
+            <editTopicButton />
           </div>
       </div>
     </Link>
