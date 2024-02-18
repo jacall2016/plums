@@ -26,7 +26,28 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-   background: purple;
+   background: rgb(147 51 234);
+}
+
+.tree {
+  /* animation: sway 4s infinite alternate; */
+}
+
+
+
+
+@keyframes sway {
+0% {
+  transform: rotate(0deg);
+}
+
+50% {
+  transform: rotate(10deg);
+}
+
+100% {
+  transform: rotate(0deg);
+}
 }
 
 @layer utilities {

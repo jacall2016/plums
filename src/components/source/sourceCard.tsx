@@ -14,7 +14,7 @@ interface Props {
 
 const SourceCard: React.FC<Props> = ({ title, description, imageUrl, url, note }) => {
   return (
-    <div className="bg-white border rounded-md overflow-hidden shadow-md transition-transform transform hover:scale-105">
+    <div className="bg-white h-auto mt-20 w-4/5 border rounded-md overflow-hidden shadow-md hover:scale-105 mx-auto">
       {imageUrl && <img src={imageUrl} alt={title} className="w-full h-auto" />}
       <div className="p-4">
         <h3 className="text-xl font-semibold">{title}</h3>

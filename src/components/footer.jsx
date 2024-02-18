@@ -3,7 +3,7 @@
 function Footer(){
 
 return (
-        <footer className="relative h-48 mt-20 bg-purple-900 flex items-center justify-between overflow-hidden text-white w-full">
+        <footer className="relative h-48 mt-20 bg-purple-900 flex items-center justify-between overflow-hidden text-white w-full top-0">
           <div className="w-1/3 h-full flex">
             <div className="flex">
               <div className="w-full p-4 sm:flex sm:flex-col sm:items-start sm:ml-10 mt-10">
