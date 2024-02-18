@@ -1,11 +1,11 @@
 import React from 'react';
 
-function DeleteImageButton({ onClick }) {
+function DeleteTopicButton({ onClick }) {
   return (
     <button onClick={onClick}>
-      Delete Image
+      Delete
     </button>
   );
 }
 
-export default DeleteImageButton;
+export default DeleteTopicButton;

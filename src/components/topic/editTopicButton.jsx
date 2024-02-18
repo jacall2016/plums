@@ -1,11 +1,11 @@
 import React from 'react';
 
-function EditImageButton({ onClick }) {
+function EditTopicButton({ onClick }) {
   return (
     <button onClick={onClick}>
-      Edit Image
+      Edit
     </button>
   );
 }
 
-export default EditImageButton;
+export default EditTopicButton;

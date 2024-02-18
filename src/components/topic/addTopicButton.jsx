@@ -1,6 +1,6 @@
 import React from 'react';
 
-function AddImageButton({ onClick }) {
+function AddTopicButton({ onClick }) {
   return (
     <button onClick={onClick}>
       Add Image
@@ -8,4 +8,4 @@ function AddImageButton({ onClick }) {
   );
 }
 
-export default AddImageButton;
+export default AddTopicButton;
