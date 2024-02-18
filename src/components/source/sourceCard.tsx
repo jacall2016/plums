@@ -1,6 +1,8 @@
 // SourceCard.js
 'use client'
 import React from 'react';
+import EditSourceButton from './editSourceButton';
+import DeleteSourceButton from './deleteSourceButton';
 
 interface Props {
   title: string;
@@ -19,6 +21,12 @@ const SourceCard: React.FC<Props> = ({ title, description, imageUrl, url, note }
         <p className="text-gray-600">{description}</p>
         {url && <a href={url} className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">Visit Source</a>}
         {note && <p className="mt-2">{note}</p>}
+      </div>
+      <div>
+        <EditSourceButton onClick={undefined}  />
+      </div>
+      <div>
+        <DeleteSourceButton onClick={undefined} />
       </div>
     </div>
   );
