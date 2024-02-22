@@ -1,46 +1,40 @@
-// A filter to display different categories
-'use client'
+'use client';
 
 import categoriesData from '../../data/categories.json';
 import React, { useState, useEffect } from 'react';
 
 const CategoryDropdown = () => {
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('');
 
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const response = await fetch('../data/categories.json');
-//         if (!response.ok) {
-//           throw new Error('Failed to fetch categories');
-//         }
+  // Uncomment this block if you want to fetch data dynamically
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch('../data/categories.json');
+  //       if (!response.ok) {
+  //         throw new Error('Failed to fetch categories');
+  //       }
 
-//         const data = await response.json();
-//         setCategories(data);
-//       } catch (error) {
-//         setError(error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
+  //       const data = await response.json();
+  //       setCategories(data);
+  //     } catch (error) {
+  //       setError(error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-//     fetchData();
-//   }, []);
-
-//   if (loading) {
-//     return <p>Loading categories...</p>;
-//   }
-
-//   if (error) {
-//     return <p>Error: {error.message}</p>;
-//   }
-
-
+  //   fetchData();
+  // }, []);
   return (
-    <select onChange={(e) => onSelect(e.target.value)}>
-      <option value="" disabled selected>Select a category</option>
+    <select
+      onChange={(e) => setSelectedCategory(e.target.value)}
+      value={selectedCategory}
+      className="h-10 px-4 border rounded-md"
+    >
+      <option value="" defaultValue>
+        Select a category
+      </option>
       {categoriesData.map((category) => (
         <option key={category.id} value={category.id}>
           {category.name}

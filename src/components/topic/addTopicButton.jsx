@@ -1,5 +1,4 @@
 'use client'
-
 import React, { useState } from 'react';
 import Image from 'next/image';
 
@@ -21,23 +20,29 @@ function AddTopicButton() {
 
   return (
     <div
-      className="relative"
+      className={`relative rounded-md inline-block transition-all duration-300 ${
+        showButtons ? 'bg-purple-800 bg-opacity-100 p-4 h-[330px]' : 'bg-purple-800 bg-opacity-0 p-0 h-10'
+      }`}
       onMouseEnter={showAddButtonList}
       onMouseLeave={hideAddButtonList}
-      onClick={() => window.innerWidth < 768 && setShowButtons(!showButtons)}
     >
-      <button className={`rounded-full overflow-hidden shadow-md transition-transform transform hover:scale-105`}>
-        <Image src="/images/greenPlumn.png" alt="Add Topic" id="addTopicButton" width={40} height={40} />
+      <button
+        className={`overflow-hidden rounded-md p-2`}
+        onClick={() => window.innerWidth < 768 && setShowButtons(!showButtons)}
+      >
+        <Image src="/images/greenPlumn.png" alt="Add Topic" id="addTopicButton" width={40} height={40} title="Add Topic"/>
       </button>
-      {showButtons && (
-        <div className="absolute top-10 right-0 z-10">
-          {/* Adjust the positioning and styling based on your layout */}
-          <AddImageButton />
-          <AddSourceButton />
-          <AddTextButton />
-          <AddUrlButton />
-        </div>
-      )}
+      <div
+        className={`absolute z-10 space-y-2 md:right-12 md:top-0 md:space-y-0 ${
+          showButtons ? 'visible opacity-100' : 'invisible opacity-0'
+        } transition-all duration-300`}
+      >
+        {/* Adjust the positioning and styling based on your layout */}
+        <AddImageButton />
+        <AddSourceButton />
+        <AddTextButton />
+        <AddUrlButton />
+      </div>
     </div>
   );
 }

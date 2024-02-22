@@ -13,8 +13,13 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      bg_card_image: {
+        'card': "url('/images/plumTopicBox.png')",
+        'width': '100%', // Set your desired width
+      },
     },
   },
   plugins: [],
 };
+
 export default config;
