@@ -2,7 +2,7 @@ import Image from "next/image";
 import TopicCardList from '../../components/topic/topicsCardList';
 import React from 'react';
 import CategoryDropdown from '../../components/catagory/categoryDropdown';
-import AddTopicButton from '../../components/topic/addTopicButton'
+import AddTopicButton from '../../components/topic/addTopicButton';
 
 export default function Topics() {
   const handleCategorySelect = (categoryId: number) => {
@@ -12,9 +12,9 @@ export default function Topics() {
   
   return (
     <main className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-4xl text-white mb-4">Topics</h1>
-      <div className="flex">
+      <div className="flex items-center"> {/* Use flex and items-center for vertical alignment */}
         <div id="categoryDropdown" className="mr-4">
+        <h1 className="text-4xl text-white mb-4">Topics</h1>
           <CategoryDropdown />
         </div>
         <div>

@@ -15,7 +15,7 @@ function AddSourceButton({ onClick }) {
       setClicked(false);
     }, 500); // Adjust the duration as needed (500 milliseconds in this example)
   };
-
+  
   return (
     <div className={`relative inline-block rounded-md ${clicked ? 'bg-green-500' : ''}`}>
       <button
