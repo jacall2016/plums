@@ -2,7 +2,7 @@ import Image from "next/image";
 import TopicCardList from '../../components/topic/topicsCardList';
 import React from 'react';
 import CategoryDropdown from '../../components/catagory/categoryDropdown';
-
+import AddTopicButton from '../../components/topic/addTopicButton'
 
 export default function Topics() {
   const handleCategorySelect = (categoryId : number) => {
@@ -15,6 +15,9 @@ export default function Topics() {
       <h1 className="text-4xl text-white">Topics</h1>
       <div id="categoryDropdown" className="mt-4">
         <CategoryDropdown/>
+      </div>
+      <div>
+        <AddTopicButton/>
       </div>
 
       <div id="topics" className="mt-8">
