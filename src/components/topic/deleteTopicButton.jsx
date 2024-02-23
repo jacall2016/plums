@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
+// import { TrashIcon } from '@heroicons/react/solid';
 
 function DeleteTopicButton({ onClick }) {
   const [clicked, setClicked] = useState(false);

@@ -4,8 +4,9 @@ import React, { useState } from 'react';
 import DeleteTopicButton from './DeleteTopicButton'; // Import the delete button component
 import EditTopicButton from './EditTopicButton'; // Import the edit button component
 import Image from 'next/image';
+import Link from 'next/link';
 
-const TopicCard = ({ customKey, title, description }) => {
+const TopicCard = ({ customKey, title, description, onDelete }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isMobileClicked, setIsMobileClicked] = useState(false);
 
@@ -21,37 +22,47 @@ const TopicCard = ({ customKey, title, description }) => {
     setIsMobileClicked(!isMobileClicked);
   };
 
+  const handleDelete = () => {
+    if (onDelete) {
+      onDelete(customKey);
+    }
+  };
+
   return (
-    <div
-      className={`relativ p-4 rounded-2xl transition-transform transform hover:scale-105 ${
-        isMobileClicked ? 'md:hover:scale-105' : '' // For mobile view, apply hover effect on click
-      }`}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onClick={handleMobileClick}
-      style={{ height: '200px', width: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', position: 'relative' }}
-    >
-      {/* Render delete and edit buttons only when hovered or clicked */}
-      {(isHovered || isMobileClicked) && (
-        <div className="absolute top-0 left-0 z-20 p-2 flex items-start bg-white">
-          <DeleteTopicButton />
-          <EditTopicButton />
-        </div>
-      )}
+    
+      <div
+        className={`relativ p-4 rounded-2xl transition-transform transform hover:scale-105 ${
+          isMobileClicked ? 'md:hover:scale-105' : '' // For mobile view, apply hover effect on click
+        }`}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onClick={handleMobileClick}
+        style={{ height: '200px', width: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', position: 'relative' }}
+      >
+        {/* Render delete and edit buttons only when hovered or clicked */}
+        {(isHovered || isMobileClicked) && (
+          <div className="absolute top-0 left-0 z-20 p-2 flex items-start bg-white">
+            <DeleteTopicButton onClick={handleDelete} />
+            <EditTopicButton />
+          </div>
+        )}
 
-      {/* Image overlay with opacity */}
-      <img
-        src="/images/plumTopicBox.png"
-        alt="Plum Topic Box"
-        className="absolute inset-0 w-full h-full object-cover rounded-2xl"
-      />
+        {/* Image overlay with opacity */}
+        <img
+          src="/images/plumTopicBox.png"
+          alt="Plum Topic Box"
+          className="absolute inset-0 w-full h-full object-cover rounded-2xl"
+        />
 
-      {/* Rest of the card content */}
-      <div className="relative z-10 text-white">
-        <h2 className="text-lg font-semibold">{title}</h2>
-        <p className="text-white">{description}</p>
+        {/* Rest of the card content */}
+        <Link href={`/Topics/${customKey}`}>
+          <div className="relative z-10 text-white">
+            <h2 className="text-lg font-semibold">{title}</h2>
+            <p className="text-white">{description}</p>
+          </div>
+        </Link>
       </div>
-    </div>
+
   );
 };
 
