@@ -1,29 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
+import TextForm from './TextForm'; // Import your TextForm component
 
-function AddTextButton({ onClick }) {
+function AddTextButton({ onAdd }) {
   const [clicked, setClicked] = useState(false);
+  const buttonRef = useRef(null);
 
   const handleClick = () => {
     setClicked(true);
-    if (onClick) {
-      onClick();
-    }
-    
-    // Set a timeout to reset the clicked state after a brief period
-    setTimeout(() => {
-      setClicked(false);
-    }, 500); // Adjust the duration as needed (500 milliseconds in this example)
   };
+
+  const handleFormSubmit = (formData) => {
+    onAdd(formData);
+    setClicked(false);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target) &&
+        event.target.tagName !== 'TEXTAREA' &&
+        event.target.tagName !== 'BUTTON'
+      ) {
+        // Clicked outside the button and not on a textarea or button, close the form
+        setClicked(false);
+      }
+    };
+
+    // Attach the event listener
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Detach the event listener when the component is unmounted
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [buttonRef]);
 
   return (
     <div className={`relative inline-block rounded-md ${clicked ? 'bg-green-500' : ''}`}>
       <button
+        ref={buttonRef}
         className={`overflow-hidden transition-transform transform hover:scale-105 p-2`}
         onClick={handleClick}
       >
-        <Image src="/images/notePad.png" alt="Add Source" id="addTopicButton" width={40} height={40} title="Add Source"/>
+        <Image src="/images/notePad.png" alt="Add Text" width={40} height={40} title="Add Note" />
       </button>
+      {clicked && (
+        <>
+          <TextForm onSubmit={handleFormSubmit} />
+        </>
+      )}
     </div>
   );
 }
