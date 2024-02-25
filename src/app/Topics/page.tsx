@@ -17,11 +17,8 @@ export default function Topics() {
         <h1 className="text-4xl text-white mb-4">Topics</h1>
           <CategoryDropdown />
         </div>
-        <div>
-          <AddTopicButton />
-        </div>
       </div>
-
+=
       <div id="topics" className="mt-8">
         <TopicCardList />
       </div>

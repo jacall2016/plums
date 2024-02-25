@@ -29,7 +29,7 @@ const TopicCard = ({ customKey, title, description, onDelete }) => {
   };
 
   return (
-    
+    <div>
       <div
         className={`relativ p-4 rounded-2xl transition-transform transform hover:scale-105 ${
           isMobileClicked ? 'md:hover:scale-105' : '' // For mobile view, apply hover effect on click
@@ -41,7 +41,7 @@ const TopicCard = ({ customKey, title, description, onDelete }) => {
       >
         {/* Render delete and edit buttons only when hovered or clicked */}
         {(isHovered || isMobileClicked) && (
-          <div className="absolute top-0 left-0 z-20 p-2 flex items-start bg-white">
+          <div className="absolute top-0 left-0 z-20 p-2 flex items-start rounded-md rounded-br-full bg-white">
             <DeleteTopicButton onClick={handleDelete} />
             <EditTopicButton />
           </div>
@@ -62,7 +62,7 @@ const TopicCard = ({ customKey, title, description, onDelete }) => {
           </div>
         </Link>
       </div>
-
+    </div>
   );
 };
 
