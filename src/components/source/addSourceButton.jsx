@@ -1,68 +1,49 @@
-import React, { useState, useRef, useEffect } from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Image from 'next/image';
-import SourceForm from './SourceForm'; // Import your SourceForm component
 
-function AddSourceButton({ onAdd }) {
-  const [clicked, setClicked] = useState(false);
-  const buttonRef = useRef(null);
-  const fileInputRef = useRef(null);
+import AddImageButton from '../image/addImageButton.jsx';
+import AddAttachmentButton from '../attachment/addAttachmentButton.jsx';
+import AddTextButton from '../text/addTextButton.jsx';
+import AddUrlButton from '../url/addUrlButton.jsx';
 
-  const handleClick = () => {
-    setClicked(true);
-    // Programmatically trigger a click on the file input
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
+function AddSourceButton() {
+  const [showButtons, setShowButtons] = useState(false);
+
+  const showAddButtonList = () => {
+    setShowButtons(true);
   };
 
-  const handleFormSubmit = (formData) => {
-    onAdd(formData);
-    setClicked(false);
+  const hideAddButtonList = () => {
+    setShowButtons(false);
   };
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        buttonRef.current &&
-        !buttonRef.current.contains(event.target) &&
-        event.target.tagName !== 'INPUT' &&
-        event.target.tagName !== 'BUTTON'
-      ) {
-        // Clicked outside the button and not on an input or button, close the form
-        setClicked(false);
-      }
-    };
-
-    // Attach the event listener
-    document.addEventListener('mousedown', handleClickOutside);
-
-    // Detach the event listener when the component is unmounted
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [buttonRef]);
 
   return (
-    <div className={`relative inline-block rounded-md ${clicked ? 'bg-green-500' : ''}`}>
+    <div
+      className={`relative rounded-md inline-block transition-all duration-300 ${
+        showButtons ? 'bg-purple-800 bg-opacity-100 p-4 h-[300px]' : 'bg-purple-800 bg-opacity-0 p-0 h-10'
+      }`}
+      onMouseEnter={showAddButtonList}
+      onMouseLeave={hideAddButtonList}
+    >
       <button
-        ref={buttonRef}
-        className={`overflow-hidden transition-transform transform hover:scale-105 p-2`}
-        onClick={handleClick}
+        className={`overflow-hidden rounded-md p-2`}
+        onClick={() => window.innerWidth < 768 && setShowButtons(!showButtons)}
       >
-        <Image src="/images/upload.png" alt="Add Source" width={40} height={40} title="Add Source" />
+        <Image src="/images/greenPlumn.png" alt="Add Topic" id="addTopicButton" width={40} height={40} title="Add Topic"/>
       </button>
-      {clicked && (
-        <>
-          <SourceForm onSubmit={handleFormSubmit} />
-          {/* Hidden file input for triggering file selection */}
-          <input
-            type="file"
-            ref={fileInputRef}
-            style={{ display: 'none' }}
-            onChange={(e) => handleFileChange(e)}
-          />
-        </>
-      )}
+      <div
+        className={`absolute z-10 flex flex-col ${
+          showButtons ? 'visible opacity-100' : 'invisible opacity-0'
+        } transition-all duration-300`}
+      >
+        {/* Adjust the positioning and styling based on your layout */}
+        <AddImageButton />
+        <AddAttachmentButton />
+        <AddTextButton />
+        <AddUrlButton />
+      </div>
     </div>
   );
 }

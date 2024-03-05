@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function SourceForm({ onSubmit }) {
+function AttachmentForm({ onSubmit }) {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileChange = (event) => {
@@ -25,4 +25,4 @@ function SourceForm({ onSubmit }) {
   );
 }
 
-export default SourceForm;
+export default AttachmentForm;

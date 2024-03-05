@@ -12,13 +12,17 @@ export default function Topics() {
   
   return (
     <main className="flex flex-col items-center justify-center h-screen">
-      <div className="flex items-center"> {/* Use flex and items-center for vertical alignment */}
-        <div id="categoryDropdown" className="mr-4">
-        <h1 className="text-4xl text-white mb-4">Topics</h1>
-          <CategoryDropdown />
+      <h1 className="text-4xl text-white mb-4">Topics</h1>
+      <div className="flex items-center">
+         {/* Use flex and items-center for vertical alignment */}
+        <div className="flex flex-row items-center">
+          <div id="categoryDropdown" className="mr-4">
+            <CategoryDropdown />
+          </div>
+          <AddTopicButton/>
         </div>
+        
       </div>
-=
       <div id="topics" className="mt-8">
         <TopicCardList />
       </div>

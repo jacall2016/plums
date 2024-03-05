@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 
 import AddImageButton from '../image/addImageButton.jsx';
-import AddSourceButton from '../source/addSourceButton.jsx';
+import AddAttachmentButton from '../attachment/addAttachmentButton.jsx';
 import AddTextButton from '../text/addTextButton.jsx';
 import AddUrlButton from '../url/addUrlButton.jsx';
 
@@ -38,11 +38,6 @@ function AddTopicButton() {
           showButtons ? 'visible opacity-100' : 'invisible opacity-0'
         } transition-all duration-300`}
       >
-        {/* Adjust the positioning and styling based on your layout */}
-        <AddImageButton />
-        <AddSourceButton />
-        <AddTextButton />
-        <AddUrlButton />
       </div>
     </div>
   );

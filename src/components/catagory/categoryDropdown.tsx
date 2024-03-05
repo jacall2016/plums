@@ -16,8 +16,6 @@ function CategoryDropdown() {
           throw new Error('Failed to fetch categories');
         }
         const data = await response.json();
-        console.log(data)
-        console.log(data.data)
         setCategories(data.data);
       } catch (error) {
         console.error('Error fetching categories:', error);
@@ -29,7 +27,6 @@ function CategoryDropdown() {
 
   return (
     <div>
-      <h1>Categories</h1>
       <select>
         <option value="">Select a category</option>
         {categories.map(category => (

@@ -18,7 +18,7 @@ model Topics {
   category    Categories @relation(fields: [categoryId], references: [id])
   categoryId  String @db.ObjectId
   title       String
-  description String
+  description String?
   sources     Sources[]
 }
 
