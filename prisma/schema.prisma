@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Categories {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  topics Topics[]
+}
+
+model Topics {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  category    Categories @relation(fields: [categoryId], references: [id])
+  categoryId  String @db.ObjectId
+  title       String
+  description String
+  sources     Sources[]
+}
+
+
+
+model Sources {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  topic    Topics @relation(fields: [topicId], references: [id])
+  topicId  String @db.ObjectId
+  title    String?
+  photos   String?
+  notes    String?
+  urls     String?
+}
+
+
+model Recently_Deleted {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  description String
+  title       String
+
+  @@map("Recently-Deleted")
+}
+
