@@ -1,16 +1,14 @@
-'use client'
-
 import React from 'react';
+import { Sources } from '@prisma/client';
 
 interface Props {
-  title: string;
-  description: string;
-  imageUrl?: string;
-  url?: string;
-  note?: string;
+  source: Sources;
 }
 
-const SourceCard: React.FC<Props> = ({ title, description, imageUrl, url, note }) => {
+const SourceCard: React.FC<Props> = ({ source }) => {
+  console.log(source)
+  const { id, title, description, photos, urls, notes } = source;
+
   return (
     <div className="relative h-auto mt-20 w-4/5 p-4 rounded-md overflow-hidden shadow-md hover:scale-105 mx-auto">
       {/* Image overlay with opacity */}
@@ -19,13 +17,13 @@ const SourceCard: React.FC<Props> = ({ title, description, imageUrl, url, note }
         alt="Plum Topic Box"
         className="absolute inset-0 w-full h-full object-cover rounded-2xl opacity-50"
       />
-      {imageUrl && <img src={imageUrl} alt={title} className="w-full h-auto z-10 rounded-md" />}
+      {photos && <img src={photos} className="w-full h-auto z-10 rounded-md" />}
       <div className="p-4 relative z-20">
         <h3 className="text-xl font-semibold">{title}</h3>
         <p className="text-gray-600">{description}</p>
-        {url && (
+        {urls && (
           <a
-            href={url}
+            href={urls}
             className="text-blue-800 hover:underline"
             target="_blank"
             rel="noopener noreferrer"
@@ -33,7 +31,7 @@ const SourceCard: React.FC<Props> = ({ title, description, imageUrl, url, note }
             Visit Source
           </a>
         )}
-        {note && <p className="mt-2">{note}</p>}
+        {notes && <p className="mt-2">{notes}</p>}
       </div>
     </div>
   );

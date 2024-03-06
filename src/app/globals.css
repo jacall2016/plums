@@ -26,7 +26,11 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-   background: rgb(147 51 234);
+   background: rgb(113, 29, 192);
+}
+
+header {
+  background: rgb(113, 29, 192);
 }
 
 .tree {

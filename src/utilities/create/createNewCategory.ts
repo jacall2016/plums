@@ -1,5 +1,5 @@
-// import { PrismaClient, Categories } from '@prisma/client';
-const { PrismaClient, Categories } = require('@prisma/client');
+import { PrismaClient, Categories } from '@prisma/client';
+
 
 // Create a new instance of the Prisma client
 // npx ts-node prisma/utilities/create/createNewCategory.ts

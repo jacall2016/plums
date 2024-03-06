@@ -1,7 +1,7 @@
 'use client'
 import { useState } from "react";
 import Image from "next/image";
-import NewTopicForm from './topicForm'
+import NewCategoryForm from './categoryForm'
 
 function AddTopicButton() {
   const [showForm, setShowForm] = useState(false);
@@ -11,9 +11,9 @@ function AddTopicButton() {
     setShowForm((prev) => !prev);
   };
 
-  const handleFormSubmit = async (formData) => {
+  const handleFormSubmit = async (formData : any) => {
     try {
-      const response = await fetch('/api/topics', {
+      const response = await fetch('/api/categories', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ function AddTopicButton() {
         {/* Add your icon or button for adding topic */}
         <Image
           className="relative left-2"
-          src="/images/icons8-add-new-48.png"
+          src="/images/icons8-add-new-50.png"
           alt="Add Topic"
           id="addTopicButton"
           width={40}
@@ -61,7 +61,7 @@ function AddTopicButton() {
           height={40}>
 
           </Image>
-          <NewTopicForm onSubmit={handleFormSubmit} />
+          <NewCategoryForm onSubmit={handleFormSubmit} />
         </div>
       )}
     </div>
