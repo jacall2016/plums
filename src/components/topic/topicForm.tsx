@@ -79,7 +79,7 @@ const NewTopicForm = ({ onSubmit }) => {
           id="category"
           value={selectedCategories}
           onChange={handleChange}
-          className="w-full px-3 py-2 rounded-md border border-purple-300 focus:outline-none focus:border-purple-500"
+          className="w-full px-3 py-2 rounded-md border border-purple-300 focus:outline-none focus:border-purple-500 text-gray-700"
         >
           {categories.map((category) => (
             <option key={category.id} value={category.id}>{category.name}</option>
@@ -88,7 +88,7 @@ const NewTopicForm = ({ onSubmit }) => {
       </div>
       <div>
         <label className="block text-gray-700 font-bold mb-2">Selected Categories:</label>
-        <ul className='flex flex-wrap justify-evenly'>
+        <ul className='flex flex-wrap justify-evenly text-gray-700'>
         {selectedCategories.map((categoryId) => {
             const category = categories.find((cat) => cat.id === categoryId);
             return (

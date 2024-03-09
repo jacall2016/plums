@@ -35,7 +35,7 @@ const Topic: React.FC<TopicProps> = ({ params }) => {
     <main className="mt-32 mb-0 flex justify-center items-center min-h-60">
       <div className="items-centerw-fit">
         <div className="flex justify-center items-center p-4">
-          <h1 className="text-black text-center text-4xl">{Title}</h1>
+          <h1 className="text-white text-center text-5xl">{Title}</h1>
           <div className="p-4">
             <AddSourceButton />
           </div>

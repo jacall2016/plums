@@ -19,19 +19,19 @@ const SourceCard: React.FC<Props> = ({ source }) => {
       />
       {photos && <img src={photos} className="w-full h-auto z-10 rounded-md" />}
       <div className="p-4 relative z-20">
-        <h3 className="text-xl font-semibold">{title}</h3>
-        <p className="text-gray-600">{description}</p>
+        <h3 className="text-xl text-white font-semibold">{title}</h3>
+        <p className="text-white">{description}</p>
         {urls && (
           <a
             href={urls}
-            className="text-blue-800 hover:underline"
+            className="text-white hover:underline"
             target="_blank"
             rel="noopener noreferrer"
           >
             Visit Source
           </a>
         )}
-        {notes && <p className="mt-2">{notes}</p>}
+        {notes && <p className="mt-2 text-white">{notes}</p>}
       </div>
     </div>
   );
