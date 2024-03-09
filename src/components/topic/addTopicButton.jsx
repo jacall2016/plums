@@ -51,7 +51,7 @@ function AddTopicButton() {
       </button>
 
       {showForm && (
-        <div className="absolute right-14 top-0 z-10 w-80 bg-white p-4 rounded-md shadow-md">
+        <div className="text-black absolute right-14 top-0 z-10 w-80 bg-white p-4 rounded-md shadow-md">
           <Image
           className="absolute left-64 ml-2 -top-0"
           onClick={toggleFormVisibility}
