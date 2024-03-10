@@ -33,14 +33,14 @@ const Topic: React.FC<TopicProps> = ({ params }) => {
 
   return (
     <main className="mt-32 mb-0 flex justify-center items-center min-h-60">
-      <div className="items-centerw-fit">
-        <div className="flex justify-center items-center p-4">
-          <h1 className="text-white text-center text-5xl">{Title}</h1>
+      <div className="items-center w-fit">
+        <h1 className="text-white text-center text-5xl">{Title}</h1>
+        <div className="items-center p-4">
           <div className="p-4">
             <AddSourceButton />
           </div>
         </div>
-        <div className="-mt-10 flex justify-center items-center">
+        <div className="items-center">
           <SourceList customKey={params.customKey} />
         </div>
       </div>

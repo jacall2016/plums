@@ -1,38 +1,29 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import ImageForm from './ImageForm'; // Import your ImageForm component
+import ImageForm from './ImageForm'; // Corrected the import statement
 
 function AddImageButton({ onAdd }) {
-  const [clicked, setClicked] = useState(false);
+  const [formVisible, setFormVisible] = useState(false);
   const buttonRef = useRef(null);
-  const fileInputRef = useRef(null);
+  const formRef = useRef(null);
 
-  const handleClick = () => {
-    setClicked(true);
-    // Programmatically trigger a click on the file input
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
+  const handleButtonClick = () => {
+    setFormVisible(!formVisible);
   };
 
   const handleFormSubmit = (formData) => {
     onAdd(formData);
-    setClicked(false);
+    setFormVisible(false);
+  };
+
+  const handleClickOutside = (event) => {
+    if (buttonRef.current && !buttonRef.current.contains(event.target)) {
+      // Clicked outside the button, close the form
+      setFormVisible(false);
+    }
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        buttonRef.current &&
-        !buttonRef.current.contains(event.target) &&
-        event.target.tagName !== 'INPUT' &&
-        event.target.tagName !== 'BUTTON'
-      ) {
-        // Clicked outside the button and not on an input or button, close the form
-        setClicked(false);
-      }
-    };
-
     // Attach the event listener
     document.addEventListener('mousedown', handleClickOutside);
 
@@ -40,28 +31,26 @@ function AddImageButton({ onAdd }) {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [buttonRef]);
+  }, []);
 
   return (
-    <div className={`relative inline-block rounded-md ${clicked ? 'bg-green-500' : ''}`}>
-      <button
-        ref={buttonRef}
-        className={`overflow-hidden transition-transform transform hover:scale-105 p-2`}
-        onClick={handleClick}
+    <div className={`relative inline-block`} ref={buttonRef}>
+      <div
+        className={`rounded transition-transform transform p-2 ${formVisible ? 'bg-green-500 transition-transform transform scale-105' : ''}`}
+        onClick={handleButtonClick}
       >
         <Image src="/images/imageIcon.png" alt="Add image" width={40} height={40} title="Add image" />
-      </button>
-      {clicked && (
-        <>
+      </div>
+      {formVisible && (
+        <div ref={formRef}>
           <ImageForm onSubmit={handleFormSubmit} />
           {/* Hidden file input for triggering file selection */}
           <input
             type="file"
-            ref={fileInputRef}
             style={{ display: 'none' }}
             onChange={(e) => handleFileChange(e)}
           />
-        </>
+        </div>
       )}
     </div>
   );

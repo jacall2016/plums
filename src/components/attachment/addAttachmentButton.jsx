@@ -1,67 +1,66 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import AttachmentForm from './attachmentForm'; // Import your SourceForm component
+import AttachmentForm from './AttachmentForm';
 
 function AddAttachmentButton({ onAdd }) {
-  const [clicked, setClicked] = useState(false);
+  const [visible, setVisible] = useState(false);
   const buttonRef = useRef(null);
-  const fileInputRef = useRef(null);
+  const formRef = useRef(null);
 
-  const handleClick = () => {
-    setClicked(true);
-    // Programmatically trigger a click on the file input
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
+  const handleButtonClick = () => {
+    setVisible(!visible);
   };
 
   const handleFormSubmit = (formData) => {
     onAdd(formData);
-    setClicked(false);
+    setVisible(false);
+  };
+
+  const handleFileChange = (event) => {
+    // Handle file change logic here
+  };
+
+  const handleClick = (event) => {
+    // Prevent form hiding when clicking inside the form
+    if (
+      (formRef.current && formRef.current.contains(event.target)) ||
+      (buttonRef.current && buttonRef.current.contains(event.target))
+    ) {
+      return;
+    }
+
+    setVisible(false);
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        buttonRef.current &&
-        !buttonRef.current.contains(event.target) &&
-        event.target.tagName !== 'INPUT' &&
-        event.target.tagName !== 'BUTTON'
-      ) {
-        // Clicked outside the button and not on an input or button, close the form
-        setClicked(false);
-      }
-    };
-
     // Attach the event listener
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('mousedown', handleClick);
 
     // Detach the event listener when the component is unmounted
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('mousedown', handleClick);
     };
-  }, [buttonRef]);
+  }, []);
 
   return (
-    <div className={`relative inline-block rounded-md ${clicked ? 'bg-green-500' : ''}`}>
-      <button
+    <div className="relative inline-block">
+      <div
         ref={buttonRef}
-        className={`overflow-hidden transition-transform transform hover:scale-105 p-2`}
-        onClick={handleClick}
+        className={`rounded transition-transform transform p-2 ${visible ? 'bg-green-500 transition-transform transform scale-105' : ''}`}
+        onClick={handleButtonClick}
       >
-        <Image src="/images/upload.png" alt="Add Source" width={40} height={40} title="Add Source" />
-      </button>
-      {clicked && (
-        <>
+        <Image src="/images/upload.svg" alt="Add Attachment" width={40} height={40} title="Add Source" />
+      </div>
+      {visible && (
+        <div ref={formRef}>
           <AttachmentForm onSubmit={handleFormSubmit} />
           {/* Hidden file input for triggering file selection */}
           <input
             type="file"
-            ref={fileInputRef}
             style={{ display: 'none' }}
             onChange={(e) => handleFileChange(e)}
           />
-        </>
+        </div>
       )}
     </div>
   );

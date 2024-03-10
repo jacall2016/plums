@@ -9,7 +9,7 @@ export default function Home() {
                   <h2 className="text-4xl text-center mx-auto my-auto w-3/5">Your Personal Learning Management System </h2>
               </div>
               <div className="mx-auto lg:ml-10 tree">
-                  <img className="w-auto h-96" src="/images/tree.png" alt="plum tree" />
+                  <img className="w-auto h-96" src="/images/tree.svg" alt="plum tree" />
               </div>
           </div>
       </main>

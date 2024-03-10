@@ -1,55 +1,54 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import UrlForm from './UrlForm'; // Import your UrlForm component
+import UrlForm from './UrlForm'; // Corrected the import statement
 
 function AddUrlButton({ onAdd }) {
-  const [clicked, setClicked] = useState(false);
+  const [formVisible, setFormVisible] = useState(false);
   const buttonRef = useRef(null);
+  const formRef = useRef(null);
 
-  const handleClick = () => {
-    setClicked(true);
+  const handleButtonClick = () => {
+    setFormVisible(!formVisible);
   };
 
   const handleFormSubmit = (formData) => {
     onAdd(formData);
-    setClicked(false);
+    setFormVisible(false);
   };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
-        buttonRef.current &&
-        !buttonRef.current.contains(event.target) &&
-        event.target.tagName !== 'INPUT' &&
-        event.target.tagName !== 'BUTTON'
+        (buttonRef.current && !buttonRef.current.contains(event.target)) &&
+        (formRef.current && !formRef.current.contains(event.target))
       ) {
-        // Clicked outside the button and not on an input or button, close the form
-        setClicked(false);
+        // Clicked outside the button and form, close the form
+        setFormVisible(false);
       }
     };
 
-    // Attach the event listener
+    // Attach the event listeners
     document.addEventListener('mousedown', handleClickOutside);
 
-    // Detach the event listener when the component is unmounted
+    // Detach the event listeners when the component is unmounted
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [buttonRef]);
+  }, [buttonRef, formRef]);
 
   return (
-    <div className={`relative inline-block rounded-md ${clicked ? 'bg-green-500' : ''}`}>
-      <button
+    <div className={`relative inline-block`}>
+      <div
+        className={`rounded overflow-hidden transition-transform transform p-2 ${formVisible ? 'bg-green-500' : ''}`}
+        onClick={handleButtonClick}
         ref={buttonRef}
-        className={`overflow-hidden transition-transform transform hover:scale-105 p-2`}
-        onClick={handleClick}
       >
-        <Image src="/images/url.png" alt="Add url" width={40} height={40} title="Add url" />
-      </button>
-      {clicked && (
-        <>
+        <Image src="/images/url.svg" alt="Add url" width={40} height={40} title="Add url" />
+      </div>
+      {formVisible && (
+        <div ref={formRef}>
           <UrlForm onSubmit={handleFormSubmit} />
-        </>
+        </div>
       )}
     </div>
   );

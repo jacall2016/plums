@@ -1,33 +1,29 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import TextForm from './TextForm'; // Import your TextForm component
+import TextForm from './TextForm'; // Corrected the import statement
 
 function AddTextButton({ onAdd }) {
-  const [clicked, setClicked] = useState(false);
+  const [formVisible, setFormVisible] = useState(false);
   const buttonRef = useRef(null);
+  const formRef = useRef(null);
 
-  const handleClick = () => {
-    setClicked(true);
+  const handleButtonClick = () => {
+    setFormVisible(!formVisible);
   };
 
   const handleFormSubmit = (formData) => {
     onAdd(formData);
-    setClicked(false);
+    setFormVisible(false);
+  };
+
+  const handleClickOutside = (event) => {
+    if (buttonRef.current && !buttonRef.current.contains(event.target)) {
+      // Clicked outside the button, close the form
+      setFormVisible(false);
+    }
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        buttonRef.current &&
-        !buttonRef.current.contains(event.target) &&
-        event.target.tagName !== 'TEXTAREA' &&
-        event.target.tagName !== 'BUTTON'
-      ) {
-        // Clicked outside the button and not on a textarea or button, close the form
-        setClicked(false);
-      }
-    };
-
     // Attach the event listener
     document.addEventListener('mousedown', handleClickOutside);
 
@@ -35,21 +31,20 @@ function AddTextButton({ onAdd }) {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [buttonRef]);
+  }, []);
 
   return (
-    <div className={`relative inline-block rounded-md ${clicked ? 'bg-green-500' : ''}`}>
-      <button
-        ref={buttonRef}
-        className={`overflow-hidden transition-transform transform hover:scale-105 p-2`}
-        onClick={handleClick}
+    <div className={`relative inline-block`} ref={buttonRef}>
+      <div
+        className={`rounded overflow-hidden transition-transform transform p-2 ${formVisible ? 'bg-green-500 transition-transform transform scale-105' : ''}`}
+        onClick={handleButtonClick}
       >
         <Image src="/images/notePad.png" alt="Add Text" width={40} height={40} title="Add Note" />
-      </button>
-      {clicked && (
-        <>
+      </div>
+      {formVisible && (
+        <div ref={formRef}>
           <TextForm onSubmit={handleFormSubmit} />
-        </>
+        </div>
       )}
     </div>
   );

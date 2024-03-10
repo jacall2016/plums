@@ -1,48 +1,24 @@
-'use client';
-
 import React, { useState } from 'react';
 import Image from 'next/image';
 
-import AddImageButton from '../image/addImageButton.jsx';
-import AddAttachmentButton from '../attachment/addAttachmentButton.jsx';
-import AddTextButton from '../text/addTextButton.jsx';
-import AddUrlButton from '../url/addUrlButton.jsx';
+import AddImageButton from '../image/AddImageButton';
+import AddAttachmentButton from '../attachment/AddAttachmentButton';
+import AddTextButton from '../text/AddTextButton';
+import AddUrlButton from '../url/AddUrlButton';
 
 function AddSourceButton() {
-  const [showButtons, setShowButtons] = useState(false);
-
-  const showAddButtonList = () => {
-    setShowButtons(true);
-  };
-
-  const hideAddButtonList = () => {
-    setShowButtons(false);
-  };
+  const [showImageButtonForm, setShowImageButtonForm] = useState(false);
+  const [showAttachmentButtonForm, setShowAttachmentButtonForm] = useState(false);
+  const [showTextButtonForm, setShowTextButtonForm] = useState(false);
+  const [showUrlButtonForm, setShowUrlButtonForm] = useState(false);
 
   return (
-    <div
-      className={`relative rounded-md inline-block transition-all duration-300 ${
-        showButtons ? 'bg-purple-800 bg-opacity-100 p-4 h-[300px]' : 'bg-purple-800 bg-opacity-0 p-0 h-10'
-      }`}
-      onMouseEnter={showAddButtonList}
-      onMouseLeave={hideAddButtonList}
-    >
-      <button
-        className={`overflow-hidden rounded-md p-2`}
-        onClick={() => window.innerWidth < 768 && setShowButtons(!showButtons)}
-      >
-        <Image src="/images/greenPlumn.png" alt="Add Topic" id="addTopicButton" width={40} height={40} title="Add Topic"/>
-      </button>
-      <div
-        className={`absolute z-10 flex flex-col ${
-          showButtons ? 'visible opacity-100' : 'invisible opacity-0'
-        } transition-all duration-300`}
-      >
-        {/* Adjust the positioning and styling based on your layout */}
-        <AddImageButton />
-        <AddAttachmentButton />
-        <AddTextButton />
-        <AddUrlButton />
+    <div className="relative inline-block">
+      <div className="flex flex-row">
+        <AddImageButton onMouseEnter={() => setShowImageButtonForm(true)} onMouseLeave={() => setShowImageButtonForm(false)} />
+        <AddAttachmentButton onMouseEnter={() => setShowAttachmentButtonForm(true)} onMouseLeave={() => setShowAttachmentButtonForm(false)} />
+        <AddTextButton onMouseEnter={() => setShowTextButtonForm(true)} onMouseLeave={() => setShowTextButtonForm(false)} />
+        <AddUrlButton onMouseEnter={() => setShowUrlButtonForm(true)} onMouseLeave={() => setShowUrlButtonForm(false)} />
       </div>
     </div>
   );
