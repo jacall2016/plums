@@ -39,7 +39,7 @@ function AddImageButton({ onAdd }) {
         className={`rounded transition-transform transform p-2 ${formVisible ? 'bg-green-500 transition-transform transform scale-105' : ''}`}
         onClick={handleButtonClick}
       >
-        <Image src="/images/imageIcon.png" alt="Add image" width={40} height={40} title="Add image" />
+        <Image src="/images/imageIcon.svg" alt="Add image" width={40} height={40} title="Add image" />
       </div>
       {formVisible && (
         <div ref={formRef}>

@@ -23,7 +23,7 @@ function DeleteSourceButton({ onClick }) {
         className={`overflow-hidden transition-transform transform hover:scale-105 p-2`}
         onClick={handleClick}
       >
-        <Image src="/images/redPlumn.png" alt="Delete Topic" id="addTopicButton" width={40} height={40} title="Delete Topic"/>
+        <Image src="/images/redPlumn.svg" alt="Delete Topic" id="addTopicButton" width={40} height={40} title="Delete Topic"/>
       </button>
     </div>
   );

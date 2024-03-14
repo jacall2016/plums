@@ -22,8 +22,8 @@ function AttachmentForm({ onSubmit }) {
   };
 
   return (
-    <div className="flex flex-col items-center z-10 relative mt-10"> {/* Added z-10 and relative classes */}
-      <form className="bg-white p-4 rounded shadow-md text-center absolute top-0 left-1/2 transform -translate-x-1/2"> {/* Added absolute and positioning classes */}
+    <div className="flex flex-col items-left z-10 relative mt-10"> {/* Changed items-center to items-left */}
+      <form className="bg-white p-4 rounded shadow-md text-left absolute top-0 left-0"> {/* Changed text-center to text-left */}
         <label htmlFor="title" className="block text-lg font-semibold mb-2">
           Title:
         </label>
@@ -34,7 +34,7 @@ function AttachmentForm({ onSubmit }) {
           onChange={handleTitleChange}
           className="border rounded py-2 px-3 mb-4"
         />
-        <p className="mb-2">Description:</p>
+        <p className="mb-2">Description:</p> {/* No need to change alignment for this */}
         <textarea
           value={text}
           onChange={handleTextChange}

@@ -22,7 +22,7 @@ function EditTopicButton({ onClick }) {
         className={`overflow-hidden transition-transform transform hover:scale-105 p-2`}
         onClick={handleClick}
       >
-        <Image src="/images/yellowPlumn.png" alt="Edit Topic" id="editTopicButton" width={40} height={40} title="Edit Topic"/>
+        <Image src="/images/yellowPlumn.svg" alt="Edit Topic" id="editTopicButton" width={40} height={40} title="Edit Topic"/>
       </button>
     </div>
   );

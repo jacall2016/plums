@@ -22,8 +22,8 @@ function UrlForm({ onSubmit }) {
   };
 
   return (
-    <div className="flex flex-col items-center z-10 relative"> {/* Added z-10 and relative classes */}
-      <form className="text-center bg-white p-4 rounded shadow-md absolute top-0 left-1/2 transform -translate-x-1/2 mt-10"> {/* Added absolute and positioning classes */}
+    <div className="flex flex-col items-left z-10 absolute"> {/* Changed items-right to items-left */}
+      <form className="text-left bg-white p-4 rounded shadow-md absolute top-0 left-0 mt-10"> {/* Changed text-center to text-left */}
         <div className="mb-4">
           <label htmlFor="title" className="block text-lg font-semibold mb-2">
             Title:

@@ -24,12 +24,12 @@ const SourceCard: React.FC<Props> = ({ source }) => {
 
       {photos && <img src={photos} className="w-full h-auto z-10 rounded-md" />}
       <div>
-        <div className="mb-3.5 absolute top-0 left-0 z-20 flex items-start rounded-md rounded-br-full bg-white">
+        <div className="mb-3.5 z-0 absolute top-0 left-0 flex items-start rounded-md rounded-br-full bg-white">
           <EditSourceButton onClick={undefined}/>
           <DeleteSourceButton onClick={undefined}/>
         </div>
-        <div className="p-4 pt-12 relative z-20">
-          <h3 className="text-xl text-white font-semibold">{title}</h3>
+        <div className="p-4 z-0 pt-12 relative">
+          <h3 className="text-xl  text-white font-semibold">{title}</h3>
           <p className="text-white">{description}</p>
           {urls && (
             <a

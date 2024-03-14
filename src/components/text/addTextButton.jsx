@@ -39,7 +39,7 @@ function AddTextButton({ onAdd }) {
         className={`rounded overflow-hidden transition-transform transform p-2 ${formVisible ? 'bg-green-500 transition-transform transform scale-105' : ''}`}
         onClick={handleButtonClick}
       >
-        <Image src="/images/notePad.png" alt="Add Text" width={40} height={40} title="Add Note" />
+        <Image src="/images/notePad.svg" alt="Add Text" width={40} height={40} title="Add Note" />
       </div>
       {formVisible && (
         <div ref={formRef}>
