@@ -38,7 +38,7 @@ header, footer {
 }
 
 .filter-buttons {
-  width: 100vw;
+  width: auto;
   margin: auto auto;
   text-align: center;
   display: flex;

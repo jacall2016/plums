@@ -1,13 +1,15 @@
-'use client'
+"use client"
+
 import React, { useEffect, useState } from 'react';
 import { Categories } from '@prisma/client';
 import Image from 'next/image';
 
 interface CategoryDropdownProps {
   onSelectCategory: (categoryId: string) => void;
+  filterClear: () => void; // Function to clear filter
 }
 
-const CategoryDropdown: React.FC<CategoryDropdownProps> = ({ onSelectCategory }) => {
+const CategoryDropdown: React.FC<CategoryDropdownProps> = ({ onSelectCategory, filterClear }) => {
   const [categories, setCategories] = useState<Categories[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showDelete, setShowDelete] = useState<string | null>(null);
@@ -38,7 +40,13 @@ const CategoryDropdown: React.FC<CategoryDropdownProps> = ({ onSelectCategory })
       onSelectCategory(categoryId); // Apply logic to filter topics here
     }
   };
-  const handleDelete = async (categoryId: string) => {
+
+  const handleFilterClear = () => {
+    setSelectedCategory(null); // Clear the selected category
+    filterClear(); // Call the filter clear function
+  };
+
+  const handleCategoryDelete = async (categoryId: string) => {
     try {
       const response = await fetch(`/api/categories/?categoryId=${categoryId}`, {
         method: 'DELETE',
@@ -76,7 +84,7 @@ const CategoryDropdown: React.FC<CategoryDropdownProps> = ({ onSelectCategory })
           {showDelete === category.id && (
             <span className='ml-2 hover:bg-white rounded-lg'>
               <Image
-                onClick={() => handleDelete(category.id)}
+                onClick={() => handleCategoryDelete(category.id)}
                 src="/images/x-icon.svg"
                 className='mt-1'
                 alt="exit icon"
@@ -87,8 +95,18 @@ const CategoryDropdown: React.FC<CategoryDropdownProps> = ({ onSelectCategory })
           )}
         </div>
       ))}
+      {/* Add a clear filter button */}
+      <div className="m-2 flex relative">
+        <button
+          onClick={handleFilterClear}
+          className={`btn-filter ${selectedCategory === null ? 'btn-filter-active' : ''}`}
+        >
+          Clear Filter
+        </button>
+      </div>
     </div>
   );
 };
 
 export default CategoryDropdown;
+

@@ -25,8 +25,6 @@ export async function POST(req: Request) {
       },
     });
 
-    // Log the created topic
-    console.log('Created topic:', newTopic);
 
     // Return the newly created topic along with associated categories
     return NextResponse.json({
@@ -56,9 +54,6 @@ export async function GET() {
     // Retrieve all topics
     const allTopics = await prisma.topics.findMany();
 
-    // Log the retrieved topics
-    console.log('All topics:', allTopics);
-
     // Return the data in the response along with a 200 status code
     return NextResponse.json({
       data: allTopics
@@ -85,7 +80,6 @@ export async function PUT(req: Request) {
   try {
     // Update the topic with the provided topic ID
     const {categories, description, id, title } = await req.json();
-    console.log(categories)
 
     const updatedTopic = await prisma.topics.update({
       where: {
@@ -113,7 +107,6 @@ export async function PUT(req: Request) {
       return !categories.some((cat : any) => cat.categoryId === ct.categoryId);
     });
 
-    console.log(categoriesToDelete)
 
     // Identify categories to add (present in provided categories but not in existingCategoryToTopics)
     const categoryIdsToAdd = categories

@@ -8,33 +8,44 @@ export async function GET(request: NextRequest) {
         // Retrieve the topicId from the URL query parameters
 
         const url = new URL(request.nextUrl);
-        const customKey = url.searchParams.get("topicId");
+        const customKey = url.searchParams.get("categoryId");
+        console.log(customKey)
 
         // Ensure that topicId is not empty
-
-
-        // Retrieve all sources for the given topic ID
-        const Topic = await prisma.topics.findFirst({
+        const topicIds = await prisma.categoryToTopic.findMany({
             where: {
-                id: customKey as string,
-            },
-        });
-        const Categories = await prisma.categoryToTopic.findMany({
-            where: {
-                topicId: customKey as string,
+                categoryId: customKey as string,
             },
             select: {
-                categoryId: true,
+                topicId: true,
             },
         });
+
+        const extractedTopicIds = topicIds.map((item) => item.topicId);
+
+        console.log(extractedTopicIds)
+
+        // Use the extracted topicIds array to fetch topics
+        const topics = await Promise.all(
+          extractedTopicIds.map(async (topicId) => {
+            const topic = await prisma.topics.findUnique({
+              where: {
+                id: topicId,
+              },
+              // Add other selection fields as needed
+            });
+            return topic;
+          })
+        );
+
 
         // Log the retrieved sources
 
 
         // Return the data in the response along with a 200 status code
         return NextResponse.json({
-            data: Topic,
-                  Categories,
+            data: topics,
+                  
         }, {
             status: 200
         });

@@ -26,19 +26,16 @@ export default function Topics() {
         </div>
       </div>
       <h1 className="text-4xl text-white mb-4 mt-36 md:mt-28 lg:mt-36">Topics</h1>
-      <div className="flex items-center">
-         {/* Use flex and items-center for vertical alignment */}
+      {/* <div className="flex items-center">
+
         <div className="flex flex-row items-center">
           <div id="categoryDropdown" className="mr-4">
             <CategoryDropdown />
           </div>
-      
         </div>
         
-      </div>
-      <div id="topics" className="mt-8">
+      </div> */}
         <TopicCardList />
-      </div>
     </main>
   );
 }
