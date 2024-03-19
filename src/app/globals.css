@@ -37,6 +37,30 @@ header, footer {
   /* animation: sway 4s infinite alternate; */
 }
 
+.filter-buttons {
+  width: 100vw;
+  margin: auto auto;
+  text-align: center;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
+
+}
+
+.filter-buttons div{
+  margin: 5px; /* Changed margin */
+  padding: 10px;
+  width: auto; /* Increased width */
+  height: 50px; /* Decreased height */
+  text-align: center;
+  background-color: #6B2895;
+  color: white; /* Changed text color */
+  font-size: 16px; /* Adjusted font size */
+  border-radius: 20px;
+  border: none; /* Removed border */
+  cursor: pointer; /* Added cursor pointer */
+}
 
 
 

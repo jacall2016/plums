@@ -8,27 +8,36 @@ datasource db {
 }
 
 model Categories {
-  id      String    @id @default(auto()) @map("_id") @db.ObjectId
-  name    String
-  topicIds String[] @db.ObjectId
-  topics  Topics[]  @relation(fields: [topicIds], references: [id])
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  topics      CategoryToTopic[]
 }
 
 model Topics {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  title       String
-  description String?
-  sources     Sources[]
-  categoryIds String[]   @db.ObjectId
-  categories  Categories[] @relation(fields: [categoryIds], references: [id])
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
+  description  String?
+  sources      Sources[]
+  categories   CategoryToTopic[]
 }
+
+model CategoryToTopic {
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  category     Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  categoryId   String @db.ObjectId
+  topic        Topics     @relation(fields: [topicId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  topicId      String @db.ObjectId
+
+  @@unique([categoryId, topicId])
+}
+
 
 
 
 
 model Sources {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
-  topic    Topics @relation(fields: [topicId], references: [id])
+  topic    Topics @relation(fields: [topicId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   topicId  String @db.ObjectId
   title    String
   description String?

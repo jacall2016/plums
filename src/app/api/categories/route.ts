@@ -77,26 +77,43 @@ export async function PUT(categoryId: string, newName: string) {
   }
 }
 
-export async function DELETE(categoryId: string) {
+export async function DELETE(request: NextRequest) {
   try {
-    // Delete the category by its ID
-    await prisma.categories.delete({ where: { id: categoryId } });
+    const url = new URL(request.nextUrl);
+    const customKey = url.searchParams.get("categoryId");
 
-    // Log the deleted category
-    console.log('Deleted category with ID:', categoryId);
+    // Delete the topic by its ID
+    await prisma.categories.delete({
+      where: {
+        id: customKey,
+      },
+    });
 
-    // Return a success response with a 200 status code
-    return NextResponse.json({ message: 'Category deleted successfully' }, { status: 200 });
+    // Fetch all topics after deletion
+    const categories = await prisma.categories.findMany();
+
+    // Return a success response with the updated topics list and a 200 status code
+    return NextResponse.json({
+      message: 'Topic deleted successfully',
+      data: categories,
+    }, {
+      status: 200,
+    });
   } catch (error) {
     // Log any errors that occur during the deletion process
     console.error('Error:', error);
 
-    // Return an error response
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    // Return an error response with a 500 status code
+    return NextResponse.json({
+      error: 'Internal Server Error',
+    }, {
+      status: 500,
+    });
   } finally {
     // Disconnect the Prisma client
     await prisma.$disconnect();
   }
 }
+
 
 

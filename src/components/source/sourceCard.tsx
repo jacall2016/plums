@@ -1,20 +1,24 @@
 import React from 'react';
 import { Sources } from '@prisma/client';
-import DeleteSourceButton from './DeleteSourceButton'; // Import the delete button component
-import EditSourceButton from './EditSourceButton'; // Import the edit button component
+import DeleteSourceButton from './DeleteSourceButton';
+import EditSourceButton from './EditSourceButton';
 
 interface Props {
   source: Sources;
+  onDelete: (sourceId: string) => void; // Define the onDelete prop type
 }
 
-const SourceCard: React.FC<Props> = ({ source }) => {
-  console.log(source);
+const SourceCard: React.FC<Props> = ({ source, onDelete }) => {
   const { id, title, description, photos, urls, notes } = source;
+
+  const handleDelete = () => {
+    if (onDelete) {
+      onDelete(id); // Correct usage of onDelete with the source id
+    }
+  };
 
   return (
     <div className="relative h-auto mt-20 w-4/5 p-4 rounded-md overflow-hidden shadow-md hover:scale-105 mx-auto">
-      
-      
       {/* Image overlay with opacity */}
       <img
         src="/images/plumTopicBox.png"
@@ -24,12 +28,12 @@ const SourceCard: React.FC<Props> = ({ source }) => {
 
       {photos && <img src={photos} className="w-full h-auto z-10 rounded-md" />}
       <div>
-        <div className="mb-3.5 z-0 absolute top-0 left-0 flex items-start rounded-md rounded-br-full bg-white">
-          <EditSourceButton onClick={undefined}/>
-          <DeleteSourceButton onClick={undefined}/>
+        <div className="mb-3.5 z-20 absolute top-0 left-0 flex items-start rounded-md rounded-br-full bg-white">
+          <EditSourceButton onClick={undefined} />
+          <DeleteSourceButton onClick={handleDelete} /> {/* Pass handleDelete */}
         </div>
         <div className="p-4 z-0 pt-12 relative">
-          <h3 className="text-xl  text-white font-semibold">{title}</h3>
+          <h3 className="text-xl text-white font-semibold">{title}</h3>
           <p className="text-white">{description}</p>
           {urls && (
             <a

@@ -14,18 +14,29 @@ export async function GET(request: NextRequest) {
 
 
         // Retrieve all sources for the given topic ID
-        const sourcesForTopic = await prisma.topics.findFirst({
+        const Topic = await prisma.topics.findFirst({
             where: {
-                id: customKey,
+                id: customKey as string,
             },
         });
+        const Categories = await prisma.categoryToTopic.findMany({
+            where: {
+                topicId: customKey as string,
+            },
+            select: {
+                categoryId: true,
+            },
+        });
+
+        console.log(Categories)
 
         // Log the retrieved sources
 
 
         // Return the data in the response along with a 200 status code
         return NextResponse.json({
-            data: sourcesForTopic
+            data: Topic,
+                  Categories,
         }, {
             status: 200
         });

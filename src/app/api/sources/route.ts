@@ -107,23 +107,28 @@ export async function PUT(sourceId: string, title?: string, photos?: string, not
   }
 }
 
-export async function DELETE(sourceId: string) {
+export async function DELETE(request: NextRequest) {
   try {
-    // Delete the source by its ID
-    const deletedSource = await prisma.sources.delete({
+    const url = new URL(request.nextUrl);
+    const customKey = url.searchParams.get("sourceId");
+
+
+    // Delete the topic by its ID
+    await prisma.sources.delete({
       where: {
-        id: sourceId,
+        id: customKey,
       },
     });
 
-    // Log the deleted source
-    console.log('Deleted source:', deletedSource);
+    // Fetch all topics after deletion
+    const topics = await prisma.sources.findMany();
 
-    // Return a success response with a 200 status code
+    // Return a success response with the updated topics list and a 200 status code
     return NextResponse.json({
-      message: 'Source deleted successfully',
+      message: 'Topic deleted successfully',
+      data: topics,
     }, {
-      status: 200
+      status: 200,
     });
   } catch (error) {
     // Log any errors that occur during the deletion process
@@ -131,9 +136,9 @@ export async function DELETE(sourceId: string) {
 
     // Return an error response with a 500 status code
     return NextResponse.json({
-      error: 'Internal Server Error'
+      error: 'Internal Server Error',
     }, {
-      status: 500
+      status: 500,
     });
   } finally {
     // Disconnect the Prisma client

@@ -6,7 +6,7 @@ import EditTopicButton from './EditTopicButton'; // Import the edit button compo
 import Image from 'next/image';
 import Link from 'next/link';
 
-const TopicCard = ({ customKey, title, description, onDelete }) => {
+const TopicCard = ({ customKey, title, description, onDelete, onEdit }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isMobileClicked, setIsMobileClicked] = useState(false);
 
@@ -28,6 +28,14 @@ const TopicCard = ({ customKey, title, description, onDelete }) => {
     }
   };
 
+  const handleEdit = () => {
+    if (onEdit) {
+      onEdit(customKey);
+    }
+  };
+
+
+
   return (
     <div>
       <div
@@ -43,7 +51,7 @@ const TopicCard = ({ customKey, title, description, onDelete }) => {
         {(isHovered || isMobileClicked) && (
           <div className="absolute top-0 left-0 z-20 p-2 flex items-start rounded-md rounded-br-full bg-white">
             <DeleteTopicButton onClick={handleDelete} />
-            <EditTopicButton />
+            <EditTopicButton onClick={handleEdit}/>
           </div>
         )}
 

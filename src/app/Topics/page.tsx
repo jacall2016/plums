@@ -14,7 +14,7 @@ export default function Topics() {
 
   
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen h-auto">
+    <main className="flex flex-col items-center justify-center min-h-screen h-auto top-20">
       <div className="flex flex-col md:flex-row justify-between absolute top-28 right-1/4 -mr-40 md:-mr-32 w-64 h-auto">
         <div className="flex flex-col h-full text-white text-center mx-auto justify-evenly items-center">
           <h4 className="ml-2">Add Topic</h4>
@@ -25,7 +25,7 @@ export default function Topics() {
           <AddCategoryButton/>
         </div>
       </div>
-      <h1 className="text-4xl text-white mb-4 mt-36 md:mt-28 lg:mt-10">Topics</h1>
+      <h1 className="text-4xl text-white mb-4 mt-36 md:mt-28 lg:mt-36">Topics</h1>
       <div className="flex items-center">
          {/* Use flex and items-center for vertical alignment */}
         <div className="flex flex-row items-center">

@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client';
-import { NextResponse } from 'next/server';
+import { CategoryToTopic, PrismaClient } from '@prisma/client';
+import { NextResponse, NextRequest } from 'next/server';
 
 const prisma = new PrismaClient();
 
@@ -7,28 +7,32 @@ export async function POST(req: Request) {
   try {
     // Extract form items from the request body
     const { title, categoryIds, description } = await req.json();
-    console.log(categoryIds)
 
-    // Create the new topic
+    // Create the new topic along with the connected categories
     const newTopic = await prisma.topics.create({
       data: {
-        // Map categoryIds to connect each category with the new topic
-        categories: {
-          connect: categoryIds.map((categoryId: string) => ({ id: categoryId })),
-        },
         title,
         description,
+        categories: {
+          // Connect each category with the new topic using CategoryToTopic junction table
+          create: categoryIds.map((categoryId: string) => ({
+            category: { connect: { id: categoryId } },
+          })),
+        },
+      },
+      include: {
+        categories: true, // Include the associated categories in the response
       },
     });
-    
+
     // Log the created topic
     console.log('Created topic:', newTopic);
 
-    // Return the newly created topic
+    // Return the newly created topic along with associated categories
     return NextResponse.json({
-      data: newTopic
+      data: newTopic,
     }, {
-      status: 201 // 201 Created status code
+      status: 201, // 201 Created status code
     });
   } catch (error) {
     // Log any errors that occur during the creation process
@@ -36,16 +40,15 @@ export async function POST(req: Request) {
 
     // Return an error response with a 500 status code
     return NextResponse.json({
-      error: 'Error creating topic'
+      error: 'Error creating topic',
     }, {
-      status: 500
+      status: 500,
     });
   } finally {
     // Disconnect the Prisma client
     await prisma.$disconnect();
   }
 }
-
 
 
 export async function GET() {
@@ -78,12 +81,15 @@ export async function GET() {
   }
 }
 
-export async function PUT(topicId: string, title: string, description?: string) {
+export async function PUT(req: Request) {
   try {
     // Update the topic with the provided topic ID
+    const {categories, description, id, title } = await req.json();
+    console.log(categories)
+
     const updatedTopic = await prisma.topics.update({
       where: {
-        id: topicId,
+        id: id,
       },
       data: {
         title,
@@ -91,12 +97,62 @@ export async function PUT(topicId: string, title: string, description?: string) 
       },
     });
 
-    // Log the updated topic
-    console.log('Updated topic:', updatedTopic);
+    // Find existing CategoryToTopic entries for the provided topicId
+    const existingCategoryToTopics = await prisma.categoryToTopic.findMany({
+      where: {
+        topicId: id,
+      },
+    });
+
+    // Extract categoryIds from existingCategoryToTopics
+    const existingCategoryIds = existingCategoryToTopics.map((ct) => ct.categoryId);
+
+    // Identify categories to delete (not present in provided categories)
+    const categoriesToDelete = existingCategoryToTopics.filter((ct) => {
+      // Check if categoryId is not present in the provided categories array for deletion
+      return !categories.some((cat : any) => cat.categoryId === ct.categoryId);
+    });
+
+    console.log(categoriesToDelete)
+
+    // Identify categories to add (present in provided categories but not in existingCategoryToTopics)
+    const categoryIdsToAdd = categories
+    .map((category : CategoryToTopic) => category.categoryId) // Extract categoryId strings
+    .filter((categoryId : string) => !existingCategoryIds.includes(categoryId));
+
+
+    // Delete categories not present in provided categories
+    await prisma.categoryToTopic.deleteMany({
+      where: {
+        AND: [
+          {
+            topicId: id,
+          },
+          {
+            categoryId: {
+              in: categoriesToDelete.map((ct) => ct.categoryId),
+            },
+          },
+        ],
+      },
+    });
+
+    // Add categories not present in existingCategoryToTopics
+    const createCategoryPromises = categoryIdsToAdd.map((categoryId : any) =>
+      prisma.categoryToTopic.create({
+        data: {
+          categoryId,
+          topicId: id,
+        },
+      })
+    );
+
+    await Promise.all(createCategoryPromises);
+    const updatedTopics = await prisma.topics.findMany();
 
     // Return the updated topic
     return NextResponse.json({
-      data: updatedTopic
+      data: updatedTopics
     }, {
       status: 200
     });
@@ -116,20 +172,28 @@ export async function PUT(topicId: string, title: string, description?: string) 
   }
 }
 
-export async function DELETE(topicId: string) {
+
+export async function DELETE(request: NextRequest) {
   try {
+    const url = new URL(request.nextUrl);
+    const customKey = url.searchParams.get("topicId");
+
     // Delete the topic by its ID
     await prisma.topics.delete({
       where: {
-        id: topicId,
+        id: customKey as string,
       },
     });
 
-    // Return a success response with a 204 status code (no content)
+    // Fetch all topics after deletion
+    const topics = await prisma.topics.findMany();
+
+    // Return a success response with the updated topics list and a 200 status code
     return NextResponse.json({
       message: 'Topic deleted successfully',
+      data: topics,
     }, {
-      status: 204
+      status: 200,
     });
   } catch (error) {
     // Log any errors that occur during the deletion process
@@ -137,9 +201,9 @@ export async function DELETE(topicId: string) {
 
     // Return an error response with a 500 status code
     return NextResponse.json({
-      error: 'Internal Server Error'
+      error: 'Internal Server Error',
     }, {
-      status: 500
+      status: 500,
     });
   } finally {
     // Disconnect the Prisma client
