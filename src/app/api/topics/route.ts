@@ -171,6 +171,20 @@ export async function DELETE(request: NextRequest) {
     const url = new URL(request.nextUrl);
     const customKey = url.searchParams.get("topicId");
 
+    const deletedTopic = await prisma.topics.findUnique({
+      where: {
+        id: customKey as string,
+      },
+      include: {
+        sources: true,
+        categories: true,
+      },
+    });
+
+    // Extract IDs from associated Sources and CategoryToTopics
+    const sourceIds = deletedTopic.sources.map(source => source.id).filter(Boolean); // Filter out null or undefined IDs
+    const categoryToTopicIds = deletedTopic.categories.map(cat => cat.id).filter(Boolean); 
+
     // Delete the topic by its ID
     await prisma.topics.delete({
       where: {
@@ -178,6 +192,16 @@ export async function DELETE(request: NextRequest) {
       },
     });
 
+    // Create Recently_Deleted entry with associated IDs
+    await prisma.recently_Deleted.create({
+      data: {
+        id: deletedTopic.id, // Assigning the same id as the deleted topic
+        title: deletedTopic.title,
+        description: deletedTopic.description as string,
+        sourceIds: { set: sourceIds }, // Set the sourceIds array
+        categoryToTopicIds: { set: categoryToTopicIds }, // Set the categoryToTopicIds array
+      },
+    });
     // Fetch all topics after deletion
     const topics = await prisma.topics.findMany();
 
