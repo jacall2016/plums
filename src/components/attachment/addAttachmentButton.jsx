@@ -1,65 +1,63 @@
-import React, { useState, useRef, useEffect } from 'react';
-import Image from 'next/image';
-import AttachmentForm from './AttachmentForm';
+import React, { useState } from "react";
+import Image from "next/image";
+//import useClient from './useClient'; // Import the custom hook
+import AttachmentForm from './AttachmentForm'; // Corrected the import statement
 
-function AddAttachmentButton({ onAdd }) {
-  const [visible, setVisible] = useState(false);
-  const buttonRef = useRef(null);
-  const formRef = useRef(null);
+function AddAttachmentButton() {
+  const [showForm, setShowForm] = useState(false);
+  //const client = useClient(); // Initialize the custom hook
 
-  const handleButtonClick = () => {
-    setVisible(!visible);
+  const toggleFormVisibility = () => {
+    setShowForm((prev) => !prev);
   };
 
-  const handleFormSubmit = (formData) => {
-    onAdd(formData);
-    setVisible(false);
-  };
-
-  const handleFileChange = (event) => {
-    // Handle file change logic here
-  };
-
-  const handleClick = (event) => {
-    // Prevent form hiding when clicking inside the form
-    if (
-      (formRef.current && formRef.current.contains(event.target)) ||
-      (buttonRef.current && buttonRef.current.contains(event.target))
-    ) {
-      return;
+  const handleFormSubmit = async (formData) => {
+    try {
+      const response = await client.fetch('/api/sources', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to upload attachment');
+      }
+      const data = await response.json();
+      // Optionally update the state or do any other actions after successful upload
+      console.log('Attachment uploaded:', data);
+      toggleFormVisibility();
+      // Perform any additional actions after successful upload
+    } catch (error) {
+      console.error('Error uploading Attachment:', error);
     }
-
-    setVisible(false);
   };
-
-  useEffect(() => {
-    // Attach the event listener
-    document.addEventListener('mousedown', handleClick);
-
-    // Detach the event listener when the component is unmounted
-    return () => {
-      document.removeEventListener('mousedown', handleClick);
-    };
-  }, []);
 
   return (
-    <div className="relative inline-block">
-      <div
-        ref={buttonRef}
-        className={`rounded transition-transform transform p-2 ${visible ? 'bg-green-500 transition-transform transform scale-105' : ''}`}
-        onClick={handleButtonClick}
-      >
-        <Image src="/images/upload.svg" alt="Add Attachment" width={40} height={40} title="Add Source" />
-      </div>
-      {visible && (
-        <div ref={formRef}>
-          <AttachmentForm onSubmit={handleFormSubmit} />
-          {/* Hidden file input for triggering file selection */}
-          <input
-            type="file"
-            style={{ display: 'none' }}
-            onChange={(e) => handleFileChange(e)}
+    <div className="relative">
+      <button onClick={toggleFormVisibility}>
+        {/* Add your icon or button for adding image */}
+        <Image
+          className="relative left-2"
+          src="/images/upload.svg"
+          alt="Add Attachment Icon"
+          width={40}
+          height={40}
+          title="Add Attachment"
+        />
+      </button>
+
+      {showForm && (
+        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 w-80 bg-white p-4 rounded-md shadow-md">
+          <Image
+            className="absolute right-4 top-4 cursor-pointer"
+            onClick={toggleFormVisibility}
+            src="/images/x-icon.svg"
+            alt="exit icon"
+            width={24}
+            height={24}
           />
+          <AttachmentForm onSubmit={handleFormSubmit} />
         </div>
       )}
     </div>

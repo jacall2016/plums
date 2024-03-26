@@ -19,45 +19,43 @@ function AttachmentForm({ onSubmit }) {
 
   const handleSubmit = () => {
     onSubmit({ selectedFile, title, text });
+    setTitle('');
+    setText('');
+    setSelectedFile(null);
   };
 
   return (
-    <div className="flex flex-col items-left z-10 relative mt-10"> {/* Changed items-center to items-left */}
-      <form className="bg-white p-4 rounded shadow-md text-left absolute top-0 left-0"> {/* Changed text-center to text-left */}
-        <label htmlFor="title" className="block text-lg font-semibold mb-2">
-          Title:
-        </label>
+    <form onSubmit={handleSubmit} className="bg-gray-200 p-6 rounded-lg shadow-md">
+      <div className="mb-4">
+        <label htmlFor="title" className="block text-gray-700 font-bold mb-2">Title:</label>
         <input
           type="text"
           id="title"
           value={title}
           onChange={handleTitleChange}
-          className="border rounded py-2 px-3 mb-4"
+          required
+          className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-purple-500"
         />
-        <p className="mb-2">Description:</p> {/* No need to change alignment for this */}
+      </div>
+      <div className="mb-4">
+        <label htmlFor="text" className="block text-gray-700 font-bold mb-2">Description:</label>
         <textarea
           value={text}
           onChange={handleTextChange}
-          className="border rounded py-2 px-3 mb-4"
+          className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-purple-500"
         />
-        <label htmlFor="attachment" className="block text-lg font-semibold mb-2">
-          Attach File:
-        </label>
+      </div>
+      <div className="mb-4">
+        <label htmlFor="attachment" className="block text-gray-700 font-bold mb-2">Select Attachment:</label>
         <input
           type="file"
           id="attachment"
           onChange={handleFileChange}
           className="mb-4"
         />
-        <button
-          type="button"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={handleSubmit}
-        >
-          Upload Source
-        </button>
-      </form>
-    </div>
+      </div>
+      <button type="submit" className="bg-purple-800 text-white py-2 px-4 rounded-md hover:bg-purple-800 mt-6">Upload Attachment</button>
+    </form>
   );
 }
 
