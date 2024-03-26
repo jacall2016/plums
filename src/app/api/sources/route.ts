@@ -3,7 +3,7 @@ import { NextResponse, NextRequest } from 'next/server';
 
 const prisma = new PrismaClient();
 
-export async function POST(topicId: string, title?: string, photos?: string, notes?: string, urls?: string) {
+export async function POST(topicId: string, title: string, photos?: string, notes?: string, urls?: string) {
   try {
     // Create the new source
     const newSource = await prisma.sources.create({
