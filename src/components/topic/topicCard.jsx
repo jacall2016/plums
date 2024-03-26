@@ -48,7 +48,7 @@ const TopicCard = ({ customKey, title, description, onDelete, onEdit }) => {
         style={{ height: '200px', width: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', position: 'relative' }}
       >
         {/* Render delete and edit buttons only when hovered or clicked */}
-        {(isHovered || isMobileClicked) && (
+        {(isHovered) && (
           <div className="absolute top-0 left-0 z-20 p-2 flex items-start rounded-md rounded-br-full bg-white">
             <DeleteTopicButton onClick={handleDelete} />
             <EditTopicButton onClick={handleEdit}/>
