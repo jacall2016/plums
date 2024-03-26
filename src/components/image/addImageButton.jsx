@@ -1,55 +1,63 @@
-import React, { useState, useRef, useEffect } from 'react';
-import Image from 'next/image';
+import React, { useState } from "react";
+import Image from "next/image";
+//import useClient from './useClient'; // Import the custom hook
 import ImageForm from './ImageForm'; // Corrected the import statement
 
-function AddImageButton({ onAdd }) {
-  const [formVisible, setFormVisible] = useState(false);
-  const buttonRef = useRef(null);
-  const formRef = useRef(null);
+function AddImageButton() {
+  const [showForm, setShowForm] = useState(false);
+  //const client = useClient(); // Initialize the custom hook
 
-  const handleButtonClick = () => {
-    setFormVisible(!formVisible);
+  const toggleFormVisibility = () => {
+    setShowForm((prev) => !prev);
   };
 
-  const handleFormSubmit = (formData) => {
-    onAdd(formData);
-    setFormVisible(false);
-  };
-
-  const handleClickOutside = (event) => {
-    if (buttonRef.current && !buttonRef.current.contains(event.target)) {
-      // Clicked outside the button, close the form
-      setFormVisible(false);
+  const handleFormSubmit = async (formData) => {
+    try {
+      const response = await client.fetch('/api/sources', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to upload image');
+      }
+      const data = await response.json();
+      // Optionally update the state or do any other actions after successful upload
+      console.log('Image uploaded:', data);
+      toggleFormVisibility();
+      // Perform any additional actions after successful upload
+    } catch (error) {
+      console.error('Error uploading image:', error);
     }
   };
 
-  useEffect(() => {
-    // Attach the event listener
-    document.addEventListener('mousedown', handleClickOutside);
-
-    // Detach the event listener when the component is unmounted
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
   return (
-    <div className={`relative inline-block`} ref={buttonRef}>
-      <div
-        className={`rounded transition-transform transform p-2 ${formVisible ? 'bg-green-500 transition-transform transform scale-105' : ''}`}
-        onClick={handleButtonClick}
-      >
-        <Image src="/images/imageIcon.svg" alt="Add image" width={40} height={40} title="Add image" />
-      </div>
-      {formVisible && (
-        <div ref={formRef}>
-          <ImageForm onSubmit={handleFormSubmit} />
-          {/* Hidden file input for triggering file selection */}
-          <input
-            type="file"
-            style={{ display: 'none' }}
-            onChange={(e) => handleFileChange(e)}
+    <div className="relative">
+      <button onClick={toggleFormVisibility}>
+        {/* Add your icon or button for adding image */}
+        <Image
+          className="relative left-2"
+          src="/images/imageIcon.svg"
+          alt="Add Image"
+          width={40}
+          height={40}
+          title="Add Image"
+        />
+      </button>
+
+      {showForm && (
+        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 w-80 bg-white p-4 rounded-md shadow-md">
+          <Image
+            className="absolute right-4 top-4 cursor-pointer"
+            onClick={toggleFormVisibility}
+            src="/images/x-icon.svg"
+            alt="exit icon"
+            width={24}
+            height={24}
           />
+          <ImageForm onSubmit={handleFormSubmit} />
         </div>
       )}
     </div>

@@ -2,51 +2,61 @@ import React, { useState } from 'react';
 
 function TextForm({ onSubmit }) {
   const [title, setTitle] = useState('');
-  const [text, setText] = useState('');
+  const [description, setDescription] = useState('');
+  const [note, setNote] = useState('');
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
   };
 
-  const handleTextChange = (event) => {
-    setText(event.target.value);
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
+  };
+
+  const handleNoteChange = (event) => {
+    setNote(event.target.value);
   };
 
   const handleSubmit = () => {
-    onSubmit({ title, text });
+    onSubmit({ title, description, note });
+    setTitle('');
+    setDescription('');
+    setNote('');
   };
 
   return (
-    <div className="flex flex-col items-left z-10 relative mt-10"> {/* Changed items-center to items-left */}
-      <form className="bg-white p-4 rounded shadow-md text-left absolute top-0 left-0"> {/* Changed text-center to text-left */}
-        <label htmlFor="title" className="block text-lg font-semibold mb-2">
-          Title:
-        </label>
+    <form onSubmit={handleSubmit} className="bg-gray-200 p-6 rounded-lg shadow-md">
+      <div className="mb-4">
+        <label htmlFor="title" className="block text-gray-700 font-bold mb-2">Title:</label>
         <input
           type="text"
           id="title"
           value={title}
           onChange={handleTitleChange}
-          className="border rounded py-2 px-3 mb-4"
+          required
+          className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-purple-500"
         />
-        <label htmlFor="text" className="block text-lg font-semibold mb-2">
-          Text:
-        </label>
+      </div>
+      <div className="mb-4">
+        <label htmlFor="description" className="block text-gray-700 font-bold mb-2">Description:</label>
         <textarea
-          id="text"
-          value={text}
-          onChange={handleTextChange}
-          className="border rounded py-2 px-3 mb-4"
+          id="description"
+          value={description}
+          onChange={handleDescriptionChange}
+          className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-purple-500"
         />
-        <button
-          type="button"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={handleSubmit}
-        >
-          Upload note
-        </button>
-      </form>
-    </div>
+      </div>
+      <div className="mb-4">
+        <label htmlFor="note" className="block text-gray-700 font-bold mb-2">Note:</label>
+        <textarea
+          id="note"
+          value={note}
+          onChange={handleNoteChange}
+          className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-purple-500"
+        />
+      </div>
+      <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Upload note</button>
+    </form>
   );
 }
 
