@@ -2,12 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import recentlyDeletedData from '../../data/recentlyDeleted.json';
-import TopicCard from './topicCard';
 import RecentlyDeletedTopicCard from './recentlyDeletedTopicCard'
 
 const DeletedTopicList = () => {
-  const [recentlyDeleted, setRecentlyDeleted] = useState(recentlyDeletedData);
+  const [recentlyDeleted, setRecentlyDeleted] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
