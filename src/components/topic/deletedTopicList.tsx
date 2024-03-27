@@ -64,7 +64,7 @@ const DeletedTopicList = () => {
     <div>
       {recentlyDeleted.map((topic) => (
         <RecentlyDeletedTopicCard
-          customKey={topic.id}
+          key={topic.id}
           title={topic.title}
           description={topic.description}
           onEdit= {() => handleEdit(topic.id)}

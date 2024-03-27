@@ -6,7 +6,7 @@ import RestoreTopicButton from './restoreTopicButton'
 import Image from 'next/image';
 import Link from 'next/link';
 
-const RecentlyDeletedTopicCard = ({ customKey, title, description, onDelete, onEdit }) => {
+const RecentlyDeletedTopicCard = ({ key, title, description, onDelete, onEdit }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isMobileClicked, setIsMobileClicked] = useState(false);
 
@@ -24,13 +24,13 @@ const RecentlyDeletedTopicCard = ({ customKey, title, description, onDelete, onE
 
   const handleDelete = () => {
     if (onDelete) {
-      onDelete(customKey);
+      onDelete(key);
     }
   };
 
   const handleEdit = () => {
     if (onEdit) {
-      onEdit(customKey);
+      onEdit(key);
     }
   };
 
@@ -63,12 +63,10 @@ const RecentlyDeletedTopicCard = ({ customKey, title, description, onDelete, onE
         />
 
         {/* Rest of the card content */}
-        <Link href={`/Topics/${customKey}`}>
           <div className="relative z-10 text-white">
             <h2 className="text-lg font-semibold">{title}</h2>
             <p className="text-white">{description}</p>
           </div>
-        </Link>
       </div>
     </div>
   );
