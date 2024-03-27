@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function Tutorial() {
   return (
     <main className="container ml-10 mr-10 mt-40 w-4/5 md:w-11/12">
-      <h1 className="text-3xl font-bold mb-4 text-white">How To Use && FAQ</h1>
+      <h1 className="text-3xl font-bold mb-4 text-white">How To Use &amp;&amp; FAQ</h1>
 
       <section className="mb-8 text-center md:text-left  bg-gray-900 bg-opacity-50 p-4 rounded-md">
         <h2 className="text-xl font-bold mb-4">1. What is the Personal Learning Management System?</h2>
