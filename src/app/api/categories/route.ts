@@ -58,6 +58,15 @@ export async function DELETE(request: NextRequest) {
     const url = new URL(request.nextUrl);
     const customKey = url.searchParams.get("categoryId");
 
+    if (customKey === null) {
+      // Handle null case, such as returning an error response
+      return NextResponse.json({
+        error: 'Category ID is required',
+      }, {
+        status: 400, // Bad Request
+      });
+    }
+
     // Delete the topic by its ID
     await prisma.categories.delete({
       where: {
@@ -70,7 +79,7 @@ export async function DELETE(request: NextRequest) {
 
     // Return a success response with the updated topics list and a 200 status code
     return NextResponse.json({
-      message: 'Topic deleted successfully',
+      message: 'Category deleted successfully',
       data: categories,
     }, {
       status: 200,
@@ -90,6 +99,7 @@ export async function DELETE(request: NextRequest) {
     await prisma.$disconnect();
   }
 }
+
 
 
 

@@ -114,6 +114,17 @@ export async function DELETE(request: NextRequest) {
     const customKey = url.searchParams.get("sourceId");
 
 
+
+    if (customKey === null) {
+      // Handle null case, such as returning an error response
+      return NextResponse.json({
+        error: 'Category ID is required',
+      }, {
+        status: 400, // Bad Request
+      });
+    }
+
+
     // Delete the topic by its ID
     await prisma.sources.delete({
       where: {
