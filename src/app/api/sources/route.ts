@@ -3,35 +3,36 @@ import { NextResponse, NextRequest } from 'next/server';
 
 const prisma = new PrismaClient();
 
-export async function POST(req: Request) {
-  try {
-    // Create the new source
-    const newSource = await prisma.sources.create({
-      data: {
-        topicId: topicId,
-        title: title,
-        photos: photos,
-        notes: notes,
-        urls: urls,
-      },
-    });
+// export async function POST(req: Request) {
+//   try {
+//     const { topicId, title, photos, notes, urls } = await req.json();
+//     // Create the new source
+//     const newSource = await prisma.sources.create({
+//       data: {
+//         topicId: topicId,
+//         title: title,
+//         photos: photos,
+//         notes: notes,
+//         urls: urls,
+//       },
+//     });
 
-    // Log the created source
-    console.log('Created source:', newSource);
+//     // Log the created source
+//     console.log('Created source:', newSource);
 
-    // Return the newly created source
-    return newSource;
-  } catch (error) {
-    // Log any errors that occur during the creation process
-    console.error('Error:', error);
+//     // Return the newly created source
+//     return newSource;
+//   } catch (error) {
+//     // Log any errors that occur during the creation process
+//     console.error('Error:', error);
 
-    // Throw an error
-    throw new Error('Error creating source');
-  } finally {
-    // Disconnect the Prisma client
-    await prisma.$disconnect();
-  }
-}
+//     // Throw an error
+//     throw new Error('Error creating source');
+//   } finally {
+//     // Disconnect the Prisma client
+//     await prisma.$disconnect();
+//   }
+// }
 
 export async function GET(request: NextRequest) {
     try {
@@ -75,37 +76,37 @@ export async function GET(request: NextRequest) {
     }
 }
 
-export async function PUT(req: Request) {
-  try {
-    // Update the source with the provided source ID
-    const updatedSource = await prisma.sources.update({
-      where: {
-        id: sourceId,
-      },
-      data: {
-        title: title,
-        photos: photos,
-        notes: notes,
-        urls: urls,
-      },
-    });
+// export async function PUT(req: Request) {
+//   try {
+//     // Update the source with the provided source ID
+//     const updatedSource = await prisma.sources.update({
+//       where: {
+//         id: sourceId,
+//       },
+//       data: {
+//         title: title,
+//         photos: photos,
+//         notes: notes,
+//         urls: urls,
+//       },
+//     });
 
-    // Log the updated source
-    console.log('Updated source:', updatedSource);
+//     // Log the updated source
+//     console.log('Updated source:', updatedSource);
 
-    // Return the updated source
-    return updatedSource;
-  } catch (error) {
-    // Log any errors that occur during the update process
-    console.error('Error:', error);
+//     // Return the updated source
+//     return updatedSource;
+//   } catch (error) {
+//     // Log any errors that occur during the update process
+//     console.error('Error:', error);
 
-    // Throw an error
-    throw new Error('Error updating source');
-  } finally {
-    // Disconnect the Prisma client
-    await prisma.$disconnect();
-  }
-}
+//     // Throw an error
+//     throw new Error('Error updating source');
+//   } finally {
+//     // Disconnect the Prisma client
+//     await prisma.$disconnect();
+//   }
+// }
 
 export async function DELETE(request: NextRequest) {
   try {
