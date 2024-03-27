@@ -1,7 +1,7 @@
 import React from 'react';
 import { Sources } from '@prisma/client';
-import DeleteSourceButton from './deleteSourceButton';
-import EditSourceButton from './editSourceButton';
+import DeleteSourceButton from './deleteSourceButton.jsx';
+import EditSourceButton from './editSourceButton.jsx';
 
 interface Props {
   source: Sources;
