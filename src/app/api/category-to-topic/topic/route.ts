@@ -7,6 +7,15 @@ export async function GET(request: NextRequest) {
     try {
         const url = new URL(request.nextUrl);
         const customKey = url.searchParams.get("topicId");
+
+        if (customKey === null) {
+          // Handle null case, such as returning an error response
+          return NextResponse.json({
+            error: 'Category ID is required',
+          }, {
+            status: 400, // Bad Request
+          });
+        }
     
   
       // Update topic fields
