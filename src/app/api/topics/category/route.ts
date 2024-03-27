@@ -28,7 +28,9 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    const extractedTopicIds = topicIds.map((item) => item.topicId);
+    const extractedTopicIds = topicIds
+      .filter((item) => item.topicId !== null && item.topicId !== undefined) // Filter out null or undefined topicIds
+      .map((item) => item.topicId as string); // Cast topicId to string
 
     // Use the extracted topicIds array to fetch topics
     const topics = await Promise.all(
