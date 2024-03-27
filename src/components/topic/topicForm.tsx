@@ -2,7 +2,15 @@
 import React, { useState, useEffect } from 'react';
 import { Categories } from '@prisma/client';
 
-const NewTopicForm = ({ onSubmit }) => {
+interface NewTopicFormProps {
+  onSubmit: (formData: {
+    title: string;
+    description: string;
+    categoryIds: string[];
+  }) => void;
+}
+
+const NewTopicForm: React.FC<NewTopicFormProps> = ({ onSubmit }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -39,8 +47,7 @@ const NewTopicForm = ({ onSubmit }) => {
     setDescription('');
     setSelectedCategories([]);
   };
-
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedOptions = Array.from(e.target.selectedOptions, (option) => option.value);
     setSelectedCategories(selectedOptions);
   };

@@ -1,10 +1,14 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-const NewCategoryForm = ({ onSubmit }) => {
+interface NewCategoryFormProps {
+  onSubmit: (formData: { name: string }) => void;
+}
+
+const NewCategoryForm: React.FC<NewCategoryFormProps> = ({ onSubmit }) => {
   const [name, setName] = useState('');
 
-  const handleSubmit = (e : any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Validate form inputs
     if (!name.trim()) {

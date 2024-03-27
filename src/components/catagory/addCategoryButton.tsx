@@ -27,7 +27,7 @@ function AddTopicButton() {
       // Optionally update the state or do any other actions after successful creation
       console.log('Topic created:', data);
       toggleFormVisibility();
-      window.location = '/Topics';
+      window.location.href = '/Topics';
     } catch (error) {
       console.error('Error creating topic:', error);
     }

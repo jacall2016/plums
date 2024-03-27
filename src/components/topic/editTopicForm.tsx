@@ -66,6 +66,7 @@ const EditTopicForm: React.FC<Props> = ({ topic, topicCategories, onSubmit }) =>
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedIds = Array.from(e.target.selectedOptions, (option) => option.value);
     const updatedCategories: CategoryToTopic[] = selectedIds.map((categoryId) => ({
+      id: categoryId, // Assuming categoryId is also the id
       categoryId: categoryId,
       topicId: topic.id,
     }));
