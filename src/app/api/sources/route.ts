@@ -3,7 +3,7 @@ import { NextResponse, NextRequest } from 'next/server';
 
 const prisma = new PrismaClient();
 
-export async function POST(topicId: string, title: string, photos?: string, notes?: string, urls?: string) {
+export async function POST(req: Request) {
   try {
     // Create the new source
     const newSource = await prisma.sources.create({
@@ -75,7 +75,7 @@ export async function GET(request: NextRequest) {
     }
 }
 
-export async function PUT(sourceId: string, title?: string, photos?: string, notes?: string, urls?: string) {
+export async function PUT(req: Request) {
   try {
     // Update the source with the provided source ID
     const updatedSource = await prisma.sources.update({
