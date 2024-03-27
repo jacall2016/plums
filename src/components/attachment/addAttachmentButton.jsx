@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 //import useClient from './useClient'; // Import the custom hook
-import AttachmentForm from './AttachmentForm'; // Corrected the import statement
+import AttachmentForm from './attachmentForm'; // Corrected the import statement
 
 function AddAttachmentButton() {
   const [showForm, setShowForm] = useState(false);
