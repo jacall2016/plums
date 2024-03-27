@@ -181,6 +181,15 @@ export async function DELETE(request: NextRequest) {
       },
     });
 
+    if (deletedTopic === null) {
+      // Handle null case, such as returning an error response
+      return NextResponse.json({
+        error: 'Deleted topic not found',
+      }, {
+        status: 400, // Bad Request
+      });
+    }
+
     // Extract IDs from associated Sources and CategoryToTopics
     const sourceIds = deletedTopic.sources.map(source => source.id).filter(Boolean); // Filter out null or undefined IDs
     const categoryToTopicIds = deletedTopic.categories.map(cat => cat.id).filter(Boolean); 
