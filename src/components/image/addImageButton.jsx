@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 //import useClient from './useClient'; // Import the custom hook
-import ImageForm from './ImageForm'; // Corrected the import statement
+import ImageForm from "./imageForm.jsx"; // Corrected the import statement
 
 function AddImageButton() {
   const [showForm, setShowForm] = useState(false);

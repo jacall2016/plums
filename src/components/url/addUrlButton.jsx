@@ -1,17 +1,21 @@
+'use client'
 import React, { useState } from "react";
 import Image from "next/image";
 //import useClient from './useClient'; // Import the custom hook
-import UrlForm from './UrlForm'; // Corrected the import statement
+import UrlForm from './urlForm.jsx'; // Corrected the import statement
 
 function AddUrlButton() {
   const [showForm, setShowForm] = useState(false);
-  //const client = useClient(); // Initialize the custom hook
 
   const toggleFormVisibility = () => {
     setShowForm((prev) => !prev);
   };
 
   const handleFormSubmit = async (formData) => {
+    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXformData",formData);
+
+    const { topicId, title, photos, notes, urls } = formData;
+    
     try {
       const response = await client.fetch('/api/sources', {
         method: 'POST',

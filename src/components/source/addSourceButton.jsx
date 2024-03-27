@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 
-import AddImageButton from '../image/AddImageButton';
-import AddAttachmentButton from '../attachment/AddAttachmentButton';
-import AddTextButton from '../text/AddTextButton';
-import AddUrlButton from '../url/AddUrlButton';
+import AddImageButton from '../image/addImageButton';
+import AddAttachmentButton from '../attachment/addAttachmentButton';
+import AddTextButton from '../text/addTextButton';
+import AddUrlButton from '../url/addUrlButton';
 
 function AddSourceButton() {
   const [showImageButtonForm, setShowImageButtonForm] = useState(false);

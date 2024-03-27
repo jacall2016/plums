@@ -1,8 +1,8 @@
 // TopicCard.jsx
 
 import React, { useState } from 'react';
-import DeleteTopicButton from './DeleteTopicButton'; // Import the delete button component
-import EditTopicButton from './EditTopicButton'; // Import the edit button component
+import DeleteTopicButton from './deleteTopicButton.jsx'; // Import the delete button component
+import EditTopicButton from './editTopicButton.jsx'; // Import the edit button component
 import Image from 'next/image';
 import Link from 'next/link';
 
