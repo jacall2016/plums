@@ -52,30 +52,6 @@ export async function GET() {
   }
 }
 
-export async function PUT(categoryId: string, newName: string) {
-  try {
-    // Update the category with the provided category ID
-    const updatedCategory = await prisma.categories.update({
-      where: { id: categoryId },
-      data: { name: newName },
-    });
-
-    // Log the updated category
-    console.log('Updated category:', updatedCategory);
-
-    // Return the updated category
-    return NextResponse.json(updatedCategory, { status: 200 });
-  } catch (error) {
-    // Log any errors that occur during the update process
-    console.error('Error:', error);
-
-    // Return an error response
-    return NextResponse.json({ error: 'Error updating category' }, { status: 500 });
-  } finally {
-    // Disconnect the Prisma client
-    await prisma.$disconnect();
-  }
-}
 
 export async function DELETE(request: NextRequest) {
   try {
