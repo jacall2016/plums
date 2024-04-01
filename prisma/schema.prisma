@@ -14,11 +14,14 @@ model Categories {
 }
 
 model Topics {
-  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  id           String           @id @default(auto()) @map("_id") @db.ObjectId
   title        String
   description  String?
   sources      Sources[]
   categories   CategoryToTopic[]
+  children     Topics[]         @relation("ParentToChildren")
+  parent       Topics?          @relation("ParentToChildren", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  parentId     String? @db.ObjectId         @map("parentId")
 }
 
 model CategoryToTopic {

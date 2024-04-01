@@ -61,7 +61,7 @@ function AddTopicButton() {
           height={40}>
 
           </Image>
-          <NewTopicForm onSubmit={handleFormSubmit} />
+          <NewTopicForm onSubmit={handleFormSubmit}  parentId={''} />
         </div>
       )}
     </div>

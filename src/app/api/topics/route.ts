@@ -1,52 +1,100 @@
-import { CategoryToTopic, PrismaClient } from '@prisma/client';
+import { CategoryToTopic, PrismaClient, Topics } from '@prisma/client';
 import { NextResponse, NextRequest } from 'next/server';
 
 const prisma = new PrismaClient();
 
+interface NewTopicData {
+  title: string;
+  description: string;
+  categories: {
+    create: {
+      category: {
+        connect: {
+          id: string;
+        };
+      };
+    }[];
+  };
+  parent?: {
+    connect: {
+      id: string;
+    };
+  };
+}
+
+
 export async function POST(req: Request) {
   try {
     // Extract form items from the request body
-    const { title, categoryIds, description } = await req.json();
+    const { title, categoryIds, description, parentId } = await req.json();
 
     // Create the new topic along with the connected categories
-    const newTopic = await prisma.topics.create({
-      data: {
-        title,
-        description,
-        categories: {
-          // Connect each category with the new topic using CategoryToTopic junction table
-          create: categoryIds.map((categoryId: string) => ({
-            category: { connect: { id: categoryId } },
-          })),
-        },
+    const newTopicData = {
+      title,
+      description,
+      categories: {
+        create: categoryIds.map((categoryId: string) => ({
+          categoryId, // Assuming your CategoryToTopic model uses categoryId
+        })),
       },
+      parentId, // Include parentId in the new topic data
+    };
+
+    const newTopic = await prisma.topics.create({
+      data: newTopicData,
       include: {
-        categories: true, // Include the associated categories in the response
+        categories: true,
+        parent: true, // Include the parent topic in the response
+        children: true, // Include the children topics in the response
       },
     });
 
+    // If parentId is valid, update the parent topic's children relation
+    if (parentId) {
+      console.log('Updating parent topic with id:', parentId);
+    
+      try {
+        // Update the parent topic's children relation
+        const updatedParentTopic = await prisma.topics.update({
+          where: { id: parentId },
+          data: {
+            children: {
+              connect: { id: newTopic.id }, // Connect the new child topic
+            },
+          },
+          include: {
+            children: true, // Include the updated children in the response
+          },
+        });
+    
+        console.log('Updated parent topic:', updatedParentTopic);
+      } catch (error) {
+        console.error('Error updating parent topic:', error);
+        // Handle the error appropriately (e.g., return an error response)
+      }
+    } else {
+      console.log('No parentId provided, skipping parent update.');
+    }
 
-    // Return the newly created topic along with associated categories
+
+    // Return the newly created topic along with its categories, parent, and children
     return NextResponse.json({
       data: newTopic,
     }, {
-      status: 201, // 201 Created status code
+      status: 201,
     });
   } catch (error) {
-    // Log any errors that occur during the creation process
     console.error('Error:', error);
-
-    // Return an error response with a 500 status code
     return NextResponse.json({
       error: 'Error creating topic',
     }, {
       status: 500,
     });
   } finally {
-    // Disconnect the Prisma client
     await prisma.$disconnect();
   }
 }
+
 
 
 export async function GET() {
