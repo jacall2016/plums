@@ -53,8 +53,6 @@ export async function POST(req: Request) {
 
     console.log("newTopic: " + newTopic)
 
-
-
     // Return the newly created topic along with its categories, parent, and children
     return NextResponse.json({
       data: newTopic,
