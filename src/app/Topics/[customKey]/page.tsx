@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import SourceList from '@/components/source/sourceCardList';
 import AddSourceButton from '@/components/source/addSourceButton';
+import AddTopicButton from '@/components/topic/addTopicButton';
 
 interface TopicProps {
   params: {
@@ -38,6 +39,7 @@ const Topic: React.FC<TopicProps> = ({ params }) => {
         <div className="items-center p-4">
           <div className="p-4">
             <AddSourceButton customKey={params.customKey} />
+            {/* <AddTopicButton parentId={params.customKey}/> */}
           </div>
         </div>
         <div className="items-center">
