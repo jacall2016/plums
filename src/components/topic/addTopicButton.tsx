@@ -17,6 +17,7 @@ const AddTopicButton: React.FC<AddTopicButtonProps> = ({ parentId }) =>{
 
   const handleFormSubmit = async (formData : any) => {
     try {
+      console.log(formData)
       const response = await fetch('/api/topics', {
         method: 'POST',
         headers: {
@@ -31,7 +32,13 @@ const AddTopicButton: React.FC<AddTopicButtonProps> = ({ parentId }) =>{
       // Optionally update the state or do any other actions after successful creation
       console.log('Topic created:', data);
       toggleFormVisibility();
-      window.location.href = '/Topics';
+      if (formData.parentId){
+        window.location.href = `/Topics/${formData.parentId}`
+      }
+      else{
+        window.location.href = '/Topics';
+      }
+      
     } catch (error) {
       console.error('Error creating topic:', error);
     }
