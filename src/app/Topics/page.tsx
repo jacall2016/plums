@@ -18,7 +18,7 @@ export default function Topics() {
       <div className="flex flex-col md:flex-row justify-between absolute top-28 right-1/4 -mr-40 md:-mr-32 w-64 h-auto">
         <div className="flex flex-col h-full text-white text-center mx-auto justify-evenly items-center">
           <h4 className="ml-2">Add Topic</h4>
-          <AddTopicButton parentId={props.customKey} />
+          <AddTopicButton parentId={''} />
         </div>
         <div className="flex flex-col h-full text-white text-center mx-auto justify-evenly items-center">
           <h4 className="ml-2">Add Category</h4>
