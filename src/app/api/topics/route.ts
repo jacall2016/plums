@@ -29,52 +29,27 @@ export async function POST(req: Request) {
     const { title, categoryIds, description, parentId } = await req.json();
 
     // Create the new topic along with the connected categories
-    const newTopicData = {
+    const newTopicData: any = {
       title,
       description,
       categories: {
         create: categoryIds.map((categoryId: string) => ({
-          categoryId, // Assuming your CategoryToTopic model uses categoryId
+          categoryId,
         })),
       },
-      parentId, // Include parentId in the new topic data
     };
-
+    
+    if (parentId && parentId.trim() !== '') {
+      newTopicData.parentId = parentId;
+    }
+    
     const newTopic = await prisma.topics.create({
       data: newTopicData,
       include: {
         categories: true,
-        parent: true, // Include the parent topic in the response
-        children: true, // Include the children topics in the response
       },
     });
 
-    // If parentId is valid, update the parent topic's children relation
-    if (parentId) {
-      console.log('Updating parent topic with id:', parentId);
-    
-      try {
-        // Update the parent topic's children relation
-        const updatedParentTopic = await prisma.topics.update({
-          where: { id: parentId },
-          data: {
-            children: {
-              connect: { id: newTopic.id }, // Connect the new child topic
-            },
-          },
-          include: {
-            children: true, // Include the updated children in the response
-          },
-        });
-    
-        console.log('Updated parent topic:', updatedParentTopic);
-      } catch (error) {
-        console.error('Error updating parent topic:', error);
-        // Handle the error appropriately (e.g., return an error response)
-      }
-    } else {
-      console.log('No parentId provided, skipping parent update.');
-    }
 
 
     // Return the newly created topic along with its categories, parent, and children

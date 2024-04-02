@@ -19,8 +19,6 @@ model Topics {
   description  String?
   sources      Sources[]
   categories   CategoryToTopic[]
-  children     Topics[]         @relation("ParentToChildren")
-  parent       Topics?          @relation("ParentToChildren", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   parentId     String? @db.ObjectId         @map("parentId")
 }
 
