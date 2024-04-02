@@ -44,7 +44,7 @@ const AddTopicButton: React.FC<AddTopicButtonProps> = ({ parentId }) =>{
       >
         {/* Add your icon or button for adding topic */}
         <Image
-          className="relative left-2"
+          className="relative"
           src="/images/icons8-add-new-48.png"
           alt="Add Topic"
           id="addTopicButton"
@@ -55,7 +55,7 @@ const AddTopicButton: React.FC<AddTopicButtonProps> = ({ parentId }) =>{
       </button>
 
       {showForm && (
-        <div className="text-black absolute right-14 top-0 z-10 w-80 bg-white p-4 rounded-md shadow-md">
+        <div className="text-black fixed top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 w-80 bg-white p-4 rounded-md shadow-md">
           <Image
           className="absolute left-64 ml-2 -top-0"
           onClick={toggleFormVisibility}

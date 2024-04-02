@@ -6,6 +6,7 @@ import AddImageButton from '../image/addImageButton';
 import AddAttachmentButton from '../attachment/addAttachmentButton';
 import AddTextButton from '../text/addTextButton';
 import AddUrlButton from '../url/addUrlButton';
+import AddTopicButton from '../topic/addTopicButton';
 
 // Define the prop type for AddSourceButton
 interface AddSourceButtonProps {
@@ -13,6 +14,7 @@ interface AddSourceButtonProps {
 }
 
 function AddSourceButton(props: AddSourceButtonProps) {
+  const [showTopicButtonForm, setShowTopicButtonForm] = useState(false);
   const [showImageButtonForm, setShowImageButtonForm] = useState(false);
   const [showAttachmentButtonForm, setShowAttachmentButtonForm] = useState(false);
   const [showTextButtonForm, setShowTextButtonForm] = useState(false);
@@ -21,6 +23,7 @@ function AddSourceButton(props: AddSourceButtonProps) {
   return (
     <div className="relative inline-block">
       <div className="flex flex-row">
+        <AddTopicButton parentId={props.customKey} onMouseEnter={() => setShowTopicButtonForm(true)} onMouseLeave={() => setShowTopicButtonForm(false)} />
         <AddImageButton customKey={props.customKey} onMouseEnter={() => setShowImageButtonForm(true)} onMouseLeave={() => setShowImageButtonForm(false)} />
         <AddAttachmentButton customKey={props.customKey} onMouseEnter={() => setShowAttachmentButtonForm(true)} onMouseLeave={() => setShowAttachmentButtonForm(false)} />
         <AddTextButton customKey={props.customKey} onMouseEnter={() => setShowTextButtonForm(true)} onMouseLeave={() => setShowTextButtonForm(false)} />
