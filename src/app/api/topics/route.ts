@@ -5,6 +5,7 @@ const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
   try {
+    
     // Extract form items from the request body
     const { title, categoryIds, description } = await req.json();
 
@@ -24,6 +25,8 @@ export async function POST(req: Request) {
         categories: true, // Include the associated categories in the response
       },
     });
+
+    console.log("newTopic: " + newTopic)
 
 
     // Return the newly created topic along with associated categories

@@ -12,6 +12,9 @@ function AddTopicButton() {
   };
 
   const handleFormSubmit = async (formData) => {
+
+    console.log("formData: " +formData)
+
     try {
       const response = await fetch('/api/topics', {
         method: 'POST',

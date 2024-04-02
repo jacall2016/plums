@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+'use client'
+import React, { useState, useEffect } from 'react';
+import { Topics } from '@prisma/client';
 
 function TextForm({ onSubmit }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [note, setNote] = useState('');
+  const [notes, setNote] = useState('');
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -18,7 +20,7 @@ function TextForm({ onSubmit }) {
   };
 
   const handleSubmit = () => {
-    onSubmit({ title, description, note });
+    onSubmit({ title, description, notes });
     setTitle('');
     setDescription('');
     setNote('');
@@ -50,7 +52,7 @@ function TextForm({ onSubmit }) {
         <label htmlFor="note" className="block text-gray-700 font-bold mb-2">Note:</label>
         <textarea
           id="note"
-          value={note}
+          value={notes}
           onChange={handleNoteChange}
           className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-purple-500"
         />

@@ -31,8 +31,6 @@ model CategoryToTopic {
   @@unique([categoryId, topicId])
 }
 
-
-
 model Sources {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
   topic    Topics? @relation(fields: [topicId], references: [id], onDelete: SetNull, onUpdate: Cascade)
@@ -42,8 +40,8 @@ model Sources {
   photos   String?
   notes    String?
   urls     String?
+  attachments String?
 }
-
 
 model Recently_Deleted {
   id String @id @map("_id") @db.ObjectId
@@ -54,4 +52,3 @@ model Recently_Deleted {
 
   @@map("Recently-Deleted")
 }
-

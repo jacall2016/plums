@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "prisma/utilities/create/createNewCategory.ts", "src/app/api/route.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "prisma/utilities/create/createNewCategory.ts", "src/app/api/route.ts", "src/components/text/textForm.jsx"],
   "exclude": ["node_modules"]
 }

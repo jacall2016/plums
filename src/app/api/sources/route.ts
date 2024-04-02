@@ -1,38 +1,55 @@
 import { PrismaClient } from '@prisma/client';
 import { NextResponse, NextRequest } from 'next/server';
+import { describe } from 'node:test';
+import fs from 'fs';
+import path from 'path';
 
 const prisma = new PrismaClient();
 
-// export async function POST(req: Request) {
-//   try {
-//     const { topicId, title, photos, notes, urls } = await req.json();
-//     // Create the new source
-//     const newSource = await prisma.sources.create({
-//       data: {
-//         topicId: topicId,
-//         title: title,
-//         photos: photos,
-//         notes: notes,
-//         urls: urls,
-//       },
-//     });
+export async function POST(req: NextRequest) {
 
-//     // Log the created source
-//     console.log('Created source:', newSource);
+  try {
+    const { topicId, title, description, photos, notes, urls, attachments } = await req.json();
 
-//     // Return the newly created source
-//     return newSource;
-//   } catch (error) {
-//     // Log any errors that occur during the creation process
-//     console.error('Error:', error);
+    // Create the new source
+    const newSource = await prisma.sources.create({
+      data: {
+        topicId: topicId,
+        title: title,
+        description: description,
+        photos: photos,
+        notes: notes,
+        urls: urls,
+        attachments: attachments
+      },
+    });
 
-//     // Throw an error
-//     throw new Error('Error creating source');
-//   } finally {
-//     // Disconnect the Prisma client
-//     await prisma.$disconnect();
-//   }
-// }
+    console.log('Created source:', newSource);
+
+    // Return the newly created source
+    //return newSource;
+    return NextResponse.json({
+      data: newSource
+    },
+    {
+      status: 201
+    });
+  } catch (error) {
+    // Log any errors that occur during the creation process
+    console.error('Error:', error);
+
+    // Return an error response with a 500 status code
+    return NextResponse.json({
+      error: 'Error creating source',
+    }, {
+      status: 500,
+    });
+  } finally {
+    // Disconnect the Prisma client
+    await prisma.$disconnect();
+  }
+}
+
 
 export async function GET(request: NextRequest) {
     try {
@@ -42,7 +59,6 @@ export async function GET(request: NextRequest) {
         const customKey = url.searchParams.get("topicId");
 
         // Ensure that topicId is not empty
-
 
         // Retrieve all sources for the given topic ID
         const sourcesForTopic = await prisma.sources.findMany({
@@ -112,8 +128,6 @@ export async function DELETE(request: NextRequest) {
   try {
     const url = new URL(request.nextUrl);
     const customKey = url.searchParams.get("sourceId");
-
-
 
     if (customKey === null) {
       // Handle null case, such as returning an error response

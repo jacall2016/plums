@@ -1,27 +1,31 @@
-import React, { useState } from 'react';
+'use client'
+import React, { useState, useEffect } from 'react';
+import { Topics } from '@prisma/client';
 
 function AttachmentForm({ onSubmit }) {
   const [title, setTitle] = useState('');
-  const [text, setText] = useState('');
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [description, setDescription] = useState('');
+  const [attachments, setAttatchment] = useState('');
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
   };
 
-  const handleTextChange = (event) => {
-    setText(event.target.value);
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
   };
 
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+  const handleAttatchmentChange = (event) => {
+    //console.log("attatchments: " + event.target.files);
+
+    setAttatchment(event.target.value);
   };
 
   const handleSubmit = () => {
-    onSubmit({ selectedFile, title, text });
+    onSubmit({ attachments, title, description });
     setTitle('');
-    setText('');
-    setSelectedFile(null);
+    setDescription('');
+    setAttatchment('');
   };
 
   return (
@@ -40,17 +44,18 @@ function AttachmentForm({ onSubmit }) {
       <div className="mb-4">
         <label htmlFor="text" className="block text-gray-700 font-bold mb-2">Description:</label>
         <textarea
-          value={text}
-          onChange={handleTextChange}
+          value={description}
+          onChange={handleDescriptionChange}
           className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-purple-500"
         />
       </div>
       <div className="mb-4">
         <label htmlFor="attachment" className="block text-gray-700 font-bold mb-2">Select Attachment:</label>
         <input
-          type="file"
+          type="text"
           id="attachment"
-          onChange={handleFileChange}
+          value={attachments}
+          onChange={handleAttatchmentChange}
           className="mb-4"
         />
       </div>

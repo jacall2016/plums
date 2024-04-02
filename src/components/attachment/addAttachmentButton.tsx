@@ -1,23 +1,31 @@
-'use client'
 import React, { useState } from "react";
 import Image from "next/image";
 //import useClient from './useClient'; // Import the custom hook
-import UrlForm from './urlForm.jsx'; // Corrected the import statement
+import AttachmentForm from "./attachmentForm.jsx";
+import { Interface } from "readline";
 
-function AddUrlButton() {
+interface AddAttachmentButtonProps {
+  customKey: string;
+}
+
+function AddAttachmentButton(props: AddAttachmentButtonProps) {
   const [showForm, setShowForm] = useState(false);
+  //const client = useClient(); // Initialize the custom hook
 
   const toggleFormVisibility = () => {
     setShowForm((prev) => !prev);
   };
 
-  const handleFormSubmit = async (formData) => {
-    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXformData",formData);
+  const handleFormSubmit = async (formData: { 
+    topicId: string, 
+    Title: string, 
+    Description: string, 
+    attachments: string; }) => {
 
-    const { topicId, title, photos, notes, urls } = formData;
-    
+    formData.topicId = props.customKey;
+
     try {
-      const response = await client.fetch('/api/sources', {
+      const response = await fetch('/api/sources', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -25,29 +33,29 @@ function AddUrlButton() {
         body: JSON.stringify(formData),
       });
       if (!response.ok) {
-        throw new Error('Failed to upload url');
+        throw new Error('Failed to upload attachment');
       }
       const data = await response.json();
       // Optionally update the state or do any other actions after successful upload
-      console.log('Url uploaded:', data);
+      console.log('Attachment uploaded:', data);
       toggleFormVisibility();
       // Perform any additional actions after successful upload
     } catch (error) {
-      console.error('Error uploading Url:', error);
+      console.error('Error uploading Attachment:', error);
     }
   };
 
   return (
     <div className="relative">
       <button onClick={toggleFormVisibility}>
-        {/* Add your icon or button for adding Url */}
+        {/* Add your icon or button for adding image */}
         <Image
           className="relative left-2"
-          src="/images/url.svg"
-          alt="Add Url"
+          src="/images/upload.svg"
+          alt="Add Attachment Icon"
           width={40}
           height={40}
-          title="Add Url"
+          title="Add Attachment"
         />
       </button>
 
@@ -61,11 +69,11 @@ function AddUrlButton() {
             width={24}
             height={24}
           />
-          <UrlForm onSubmit={handleFormSubmit} />
+          <AttachmentForm onSubmit={handleFormSubmit} />
         </div>
       )}
     </div>
   );
 }
 
-export default AddUrlButton;
+export default AddAttachmentButton;

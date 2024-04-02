@@ -2,26 +2,37 @@ import React, { useState } from 'react';
 
 function ImageForm({ onSubmit }) {
   const [title, setTitle] = useState('');
-  const [text, setText] = useState('');
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [description, setDescription] = useState('');
+  const [photos, setPhoto] = useState(null);
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
   };
 
-  const handleTextChange = (event) => {
-    setText(event.target.value);
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
   };
 
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+  const handlePhotoChange = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+  
+    reader.onloadend = () => {
+      // When the file is loaded, convert it to a base64 string and set the state
+      const fileString = reader.result;
+      setPhoto(fileString);
+    };
+  
+    // Read the file as a data URL (base64 encoded string)
+    reader.readAsDataURL(file);
   };
 
   const handleSubmit = () => {
-    onSubmit({ selectedFile, title, text });
+    console.log({ photos, title, description });
+    onSubmit({ photos, title, description });
     setTitle('');
-    setText('');
-    setSelectedFile(null);
+    setDescription('');
+    setPhoto(null);
   };
 
   return (
@@ -40,8 +51,8 @@ function ImageForm({ onSubmit }) {
       <div className="mb-4">
         <label htmlFor="text" className="block text-gray-700 font-bold mb-2">Description:</label>
         <textarea
-          value={text}
-          onChange={handleTextChange}
+          value={description}
+          onChange={handleDescriptionChange}
           className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-purple-500"
         />
       </div>
@@ -50,7 +61,7 @@ function ImageForm({ onSubmit }) {
         <input
           type="file"
           id="image"
-          onChange={handleFileChange}
+          onChange={handlePhotoChange}
           className="mb-4"
         />
       </div>

@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 
 function UrlForm({ onSubmit }) {
   const [title, setTitle] = useState('');
-  const [text, setText] = useState('');
-  const [url, setUrl] = useState('');
+  const [description, setDesription] = useState('');
+  const [urls, setUrl] = useState('');
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
   };
 
-  const handleTextChange = (event) => {
-    setText(event.target.value);
+  const handleDescriptionChange = (event) => {
+    setDesription(event.target.value);
   };
 
   const handleUrlChange = (event) => {
@@ -18,9 +18,9 @@ function UrlForm({ onSubmit }) {
   };
 
   const handleSubmit = () => {
-    onSubmit({ title, text, url });
+    onSubmit({ urls, title, description });
     setTitle('');
-    setText('');
+    setDesription('');
     setUrl('');
   };
 
@@ -41,8 +41,8 @@ function UrlForm({ onSubmit }) {
         <label htmlFor="text" className="block text-gray-700 font-bold mb-2">Description:</label>
         <textarea
           id="text"
-          value={text}
-          onChange={handleTextChange}
+          value={description}
+          onChange={handleDescriptionChange}
           className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-purple-500"
         />
       </div>
@@ -51,7 +51,7 @@ function UrlForm({ onSubmit }) {
         <input
           type="text"
           id="url"
-          value={url}
+          value={urls}
           onChange={handleUrlChange}
           className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-purple-500"
         />

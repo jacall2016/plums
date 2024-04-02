@@ -37,7 +37,7 @@ const Topic: React.FC<TopicProps> = ({ params }) => {
         <h1 className="text-white text-center text-5xl">{Title}</h1>
         <div className="items-center p-4">
           <div className="p-4">
-            <AddSourceButton />
+            <AddSourceButton customKey={params.customKey} />
           </div>
         </div>
         <div className="items-center">

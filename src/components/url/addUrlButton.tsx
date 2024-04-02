@@ -1,19 +1,30 @@
+'use client'
 import React, { useState } from "react";
 import Image from "next/image";
 //import useClient from './useClient'; // Import the custom hook
-import AttachmentForm from "./attachmentForm.jsx";
+import UrlForm from './urlForm.jsx'; // Corrected the import statement
 
-function AddAttachmentButton() {
+interface AddUrlButtonProps {
+  customKey: string;
+}
+
+function AddUrlButton(props: AddUrlButtonProps) {
   const [showForm, setShowForm] = useState(false);
-  //const client = useClient(); // Initialize the custom hook
 
   const toggleFormVisibility = () => {
     setShowForm((prev) => !prev);
   };
 
-  const handleFormSubmit = async (formData) => {
+  const handleFormSubmit = async (formData: { 
+    topicId: string, 
+    Title: string, 
+    Description: string,
+    urls: string; }) => {
+
+    formData.topicId = props.customKey;
+    
     try {
-      const response = await client.fetch('/api/sources', {
+      const response = await fetch('/api/sources', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -21,29 +32,29 @@ function AddAttachmentButton() {
         body: JSON.stringify(formData),
       });
       if (!response.ok) {
-        throw new Error('Failed to upload attachment');
+        throw new Error('Failed to upload url');
       }
       const data = await response.json();
       // Optionally update the state or do any other actions after successful upload
-      console.log('Attachment uploaded:', data);
+      console.log('Url uploaded:', data);
       toggleFormVisibility();
       // Perform any additional actions after successful upload
     } catch (error) {
-      console.error('Error uploading Attachment:', error);
+      console.error('Error uploading Url:', error);
     }
   };
 
   return (
     <div className="relative">
       <button onClick={toggleFormVisibility}>
-        {/* Add your icon or button for adding image */}
+        {/* Add your icon or button for adding Url */}
         <Image
           className="relative left-2"
-          src="/images/upload.svg"
-          alt="Add Attachment Icon"
+          src="/images/url.svg"
+          alt="Add Url"
           width={40}
           height={40}
-          title="Add Attachment"
+          title="Add Url"
         />
       </button>
 
@@ -57,11 +68,11 @@ function AddAttachmentButton() {
             width={24}
             height={24}
           />
-          <AttachmentForm onSubmit={handleFormSubmit} />
+          <UrlForm onSubmit={handleFormSubmit} />
         </div>
       )}
     </div>
   );
 }
 
-export default AddAttachmentButton;
+export default AddUrlButton;

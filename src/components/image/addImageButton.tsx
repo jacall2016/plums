@@ -2,8 +2,13 @@ import React, { useState } from "react";
 import Image from "next/image";
 //import useClient from './useClient'; // Import the custom hook
 import ImageForm from "./imageForm.jsx"; // Corrected the import statement
+import { Interface } from "readline";
 
-function AddImageButton() {
+interface AddImageButtonProps {
+  customKey: string;
+}
+
+function AddImageButton(props: AddImageButtonProps) {
   const [showForm, setShowForm] = useState(false);
   //const client = useClient(); // Initialize the custom hook
 
@@ -11,9 +16,16 @@ function AddImageButton() {
     setShowForm((prev) => !prev);
   };
 
-  const handleFormSubmit = async (formData) => {
+  const handleFormSubmit = async (formData: { 
+    topicId: string, 
+    Title: string, 
+    Description: string, 
+    photos: string; }) => {
+    
+    formData.topicId = props.customKey;
+
     try {
-      const response = await client.fetch('/api/sources', {
+      const response = await fetch('/api/sources', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
