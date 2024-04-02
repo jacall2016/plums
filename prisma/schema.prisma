@@ -14,11 +14,12 @@ model Categories {
 }
 
 model Topics {
-  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  id           String           @id @default(auto()) @map("_id") @db.ObjectId
   title        String
   description  String?
   sources      Sources[]
   categories   CategoryToTopic[]
+  parentId     String? @db.ObjectId         @map("parentId")
 }
 
 model CategoryToTopic {

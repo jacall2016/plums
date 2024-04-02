@@ -1,20 +1,23 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import { Categories } from '@prisma/client';
+import { Categories } from '@prisma/client'; // Adjust this import as needed
 
 interface NewTopicFormProps {
   onSubmit: (formData: {
     title: string;
     description: string;
     categoryIds: string[];
+    parentId: string | null;
   }) => void;
+  parentId?: string | null; // Make parentId optional in props
 }
 
-const NewTopicForm: React.FC<NewTopicFormProps> = ({ onSubmit }) => {
+const NewTopicForm: React.FC<NewTopicFormProps> = ({ onSubmit, parentId = null }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [categories, setCategories] = useState<Categories[]>([]);
+  const [possibleTopicIds, setPossibleTopicIds] = useState<string[]>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -25,6 +28,8 @@ const NewTopicForm: React.FC<NewTopicFormProps> = ({ onSubmit }) => {
         }
         const data = await response.json();
         setCategories(data.data);
+        
+      
       } catch (error) {
         console.error('Error fetching categories:', error);
       }
@@ -40,13 +45,14 @@ const NewTopicForm: React.FC<NewTopicFormProps> = ({ onSubmit }) => {
       alert('Please enter a title');
       return;
     }
-    // Call onSubmit callback with form data
-    onSubmit({ title, description, categoryIds: selectedCategories });
+    // Call onSubmit callback with form data including parentId
+    onSubmit({ title, description, categoryIds: selectedCategories, parentId });
     // Reset form fields
     setTitle('');
     setDescription('');
     setSelectedCategories([]);
   };
+
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedOptions = Array.from(e.target.selectedOptions, (option) => option.value);
     setSelectedCategories(selectedOptions);
@@ -58,6 +64,9 @@ const NewTopicForm: React.FC<NewTopicFormProps> = ({ onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit} className="bg-gray-200 p-6 rounded-lg shadow-md">
+      {/* Hidden field for parentId */}
+      <input type="hidden" name="parentId" value={parentId || ''} />
+
       <div className="mb-4">
         <label htmlFor="title" className="block text-gray-700 font-bold mb-2">Title:</label>
         <input
@@ -93,21 +102,21 @@ const NewTopicForm: React.FC<NewTopicFormProps> = ({ onSubmit }) => {
           ))}
         </select>
       </div>
-      <div>
-        <label className="block text-gray-700 font-bold mb-2">Selected Categories:</label>
-        <ul className='flex flex-wrap justify-evenly text-gray-700'>
-        {selectedCategories.map((categoryId) => {
-            const category = categories.find((cat) => cat.id === categoryId);
-            return (
-              <li key={categoryId} onDoubleClick={() => handleRemoveCategory(categoryId)}>
-                {category ? category.name : 'Unknown Category'}
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-      <button type="submit" className="bg-purple-800 text-white py-2 px-4 rounded-md hover:bg-purple-800 mt-6">Add Topic</button>
-    </form>
+        <div>
+          <label className="block text-gray-700 font-bold mb-2">Selected Categories:</label>
+          <ul className='flex flex-wrap justify-evenly text-gray-700'>
+          {selectedCategories.map((categoryId) => {
+              const category = categories.find((cat) => cat.id === categoryId);
+              return (
+                <li key={categoryId} onDoubleClick={() => handleRemoveCategory(categoryId)}>
+                  {category ? category.name : 'Unknown Category'}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+        <button type="submit" className="bg-purple-800 text-white py-2 px-4 rounded-md hover:bg-purple-800 mt-6">Add Topic</button>
+      </form>
   );
 };
 

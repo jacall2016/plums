@@ -3,7 +3,11 @@ import { useState } from "react";
 import Image from "next/image";
 import NewTopicForm from './topicForm'
 
-function AddTopicButton() {
+interface AddTopicButtonProps {
+  parentId: string; // Define parentId as a prop
+}
+
+const AddTopicButton: React.FC<AddTopicButtonProps> = ({ parentId }) =>{
   const [showForm, setShowForm] = useState(false);
   const [topics, setTopics] = useState([]);
 
@@ -11,10 +15,7 @@ function AddTopicButton() {
     setShowForm((prev) => !prev);
   };
 
-  const handleFormSubmit = async (formData) => {
-
-    console.log("formData: " +formData)
-
+  const handleFormSubmit = async (formData : any) => {
     try {
       const response = await fetch('/api/topics', {
         method: 'POST',
@@ -30,7 +31,7 @@ function AddTopicButton() {
       // Optionally update the state or do any other actions after successful creation
       console.log('Topic created:', data);
       toggleFormVisibility();
-      window.location = '/Topics';
+      window.location.href = '/Topics';
     } catch (error) {
       console.error('Error creating topic:', error);
     }
@@ -64,7 +65,7 @@ function AddTopicButton() {
           height={40}>
 
           </Image>
-          <NewTopicForm onSubmit={handleFormSubmit} />
+          <NewTopicForm onSubmit={handleFormSubmit}  parentId={parentId} />
         </div>
       )}
     </div>

@@ -1,0 +1,219 @@
+import { PrismaClient } from '@prisma/client';
+import { NextResponse, NextRequest } from 'next/server';
+import { CategoryToTopic } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
+export async function GET(request: NextRequest) {
+    try {
+        // Retrieve the topicId from the URL query parameters
+
+        const url = new URL(request.nextUrl);
+        const customKey = url.searchParams.get("topicId");
+
+        // Ensure that topicId is not empty
+
+
+        // Retrieve all sources for the given topic ID
+        const childrenTopics = await prisma.topics.findMany({
+            where: {
+                parentId: customKey,
+            },
+        });
+
+        // Log the retrieved sources
+
+
+        // Return the data in the response along with a 200 status code
+        return NextResponse.json({
+            data: childrenTopics
+        }, {
+            status: 200
+        });
+    } catch (error) {
+        // Log any errors that occur during the retrieval process
+        console.error('Error:', error);
+
+        // Return an error response with a 500 status code
+        return NextResponse.json({
+            error: 'Internal Server Error'
+        }, {
+            status: 500
+        });
+    } finally {
+        // Disconnect the Prisma client
+        await prisma.$disconnect();
+    }
+}
+
+
+export async function PUT(req: Request) {
+    try {
+      // Update the topic with the provided topic ID
+      const {categories, description, id, title } = await req.json();
+  
+      const updatedTopic = await prisma.topics.update({
+        where: {
+          id: id,
+        },
+        data: {
+          title,
+          description,
+        },
+      });
+  
+      // Find existing CategoryToTopic entries for the provided topicId
+      const existingCategoryToTopics = await prisma.categoryToTopic.findMany({
+        where: {
+          topicId: id,
+        },
+      });
+  
+      // Extract categoryIds from existingCategoryToTopics
+      const existingCategoryIds = existingCategoryToTopics.map((ct) => ct.categoryId);
+  
+      // Identify categories to delete (not present in provided categories)
+      const categoriesToDelete = existingCategoryToTopics.filter((ct) => {
+        // Check if categoryId is not present in the provided categories array for deletion
+        return !categories.some((cat : any) => cat.categoryId === ct.categoryId);
+      });
+  
+  
+      // Identify categories to add (present in provided categories but not in existingCategoryToTopics)
+      const categoryIdsToAdd = categories
+      .map((category : CategoryToTopic) => category.categoryId) // Extract categoryId strings
+      .filter((categoryId : string) => !existingCategoryIds.includes(categoryId));
+  
+  
+      // Delete categories not present in provided categories
+      await prisma.categoryToTopic.deleteMany({
+        where: {
+          AND: [
+            {
+              topicId: id,
+            },
+            {
+              categoryId: {
+                in: categoriesToDelete.map((ct) => ct.categoryId),
+              },
+            },
+          ],
+        },
+      });
+  
+      // Add categories not present in existingCategoryToTopics
+      const createCategoryPromises = categoryIdsToAdd.map((categoryId : any) =>
+        prisma.categoryToTopic.create({
+          data: {
+            categoryId,
+            topicId: id,
+          },
+        })
+      );
+  
+      await Promise.all(createCategoryPromises);
+      const updatedTopics = await prisma.topics.findMany({
+        where: {
+            parentId: updatedTopic.parentId,
+        },
+    });
+
+  
+      // Return the updated topic
+      return NextResponse.json({
+        data: updatedTopics
+      }, {
+        status: 200
+      });
+    } catch (error) {
+      // Log any errors that occur during the update process
+      console.error('Error:', error);
+  
+      // Return an error response with a 500 status code
+      return NextResponse.json({
+        error: 'Error updating topic'
+      }, {
+        status: 500
+      });
+    } finally {
+      // Disconnect the Prisma client
+      await prisma.$disconnect();
+    }
+  }
+  
+  
+  export async function DELETE(request: NextRequest) {
+    try {
+      const url = new URL(request.nextUrl);
+      const customKey = url.searchParams.get("topicId");
+  
+      const deletedTopic = await prisma.topics.findUnique({
+        where: {
+          id: customKey as string,
+        },
+        include: {
+          sources: true,
+          categories: true,
+        },
+      });
+  
+      if (deletedTopic === null) {
+        // Handle null case, such as returning an error response
+        return NextResponse.json({
+          error: 'Deleted topic not found',
+        }, {
+          status: 400, // Bad Request
+        });
+      }
+  
+      // Extract IDs from associated Sources and CategoryToTopics
+      const sourceIds = deletedTopic.sources.map(source => source.id).filter(Boolean); // Filter out null or undefined IDs
+      const categoryToTopicIds = deletedTopic.categories.map(cat => cat.id).filter(Boolean); 
+  
+      // Delete the topic by its ID
+      await prisma.topics.delete({
+        where: {
+          id: customKey as string,
+        },
+      });
+  
+      // Create Recently_Deleted entry with associated IDs
+      await prisma.recently_Deleted.create({
+        data: {
+          id: deletedTopic.id, // Assigning the same id as the deleted topic
+          title: deletedTopic.title,
+          description: deletedTopic.description as string,
+          sourceIds: { set: sourceIds }, // Set the sourceIds array
+          categoryToTopicIds: { set: categoryToTopicIds }, // Set the categoryToTopicIds array
+        },
+      });
+      // Fetch all topics after deletion
+      const childrenTopics = await prisma.topics.findMany({
+        where: {
+            parentId: customKey,
+        },
+    });
+  
+      // Return a success response with the updated topics list and a 200 status code
+      return NextResponse.json({
+        message: 'Topic deleted successfully',
+        data: childrenTopics,
+      }, {
+        status: 200,
+      });
+    } catch (error) {
+      // Log any errors that occur during the deletion process
+      console.error('Error:', error);
+  
+      // Return an error response with a 500 status code
+      return NextResponse.json({
+        error: 'Internal Server Error',
+      }, {
+        status: 500,
+      });
+    } finally {
+      // Disconnect the Prisma client
+      await prisma.$disconnect();
+    }
+  }
+  
