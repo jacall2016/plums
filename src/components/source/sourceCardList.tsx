@@ -168,8 +168,9 @@ const SourceList: React.FC<Props> = ({ customKey }) => {
           <SourceCard
             key={source.id}
             source={source} // Pass the entire source object
-            onDelete={() => handleDelete(source.id)}
-          />
+            onDelete={() => handleDelete(source.id)} onEdit={function (sourceId: string): void {
+              throw new Error('Function not implemented.');
+            } }          />
         ))}
       </div>
     </div>
