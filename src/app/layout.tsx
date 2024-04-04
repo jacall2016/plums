@@ -1,3 +1,4 @@
+'use client';
 import type { Metadata } from "next";
 import {Footer} from "../components/footer.jsx"
 import {Header} from "../components/header.jsx"

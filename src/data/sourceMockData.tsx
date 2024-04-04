@@ -1,3 +1,4 @@
+'use client';
 // MockData.tsx
 export interface Source {
     id: string;
