@@ -84,7 +84,7 @@ export async function GET(request: NextRequest) {
         await prisma.$disconnect();
     }
 }
-
+/*
 export async function PUT(req: Request) {
    try {
     const { sourceId, title, photos, notes, urls } = await req.json();
@@ -118,7 +118,7 @@ export async function PUT(req: Request) {
      await prisma.$disconnect();
    }
  }
-
+*/
 export async function DELETE(request: NextRequest) {
   try {
     const url = new URL(request.nextUrl);
