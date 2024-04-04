@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import { NextResponse, NextRequest } from 'next/server';
 
 const prisma = new PrismaClient();
-
+/*
 export async function POST(req: Request) {
   try {
     // Create the new category
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
     // Disconnect the Prisma client
     await prisma.$disconnect();
   }
-}
+}*/
 
 export async function GET() {
   try {
