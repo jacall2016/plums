@@ -86,38 +86,46 @@ export async function GET(request: NextRequest) {
 }
 
 export async function PUT(req: Request) {
-   try {
-    const { sourceId, title, photos, notes, urls } = await req.json();
+  try {
+   const { sourceId, title, photos, notes, urls } = await req.json();
 
-     // Update the source with the provided source ID
-     const updatedSource = await prisma.sources.update({
-       where: {
-         id: sourceId,
-       },
-       data: {
-         title: title,
-         photos: photos,
-         notes: notes,
-         urls: urls,
-       },
-     });
+    // Update the source with the provided source ID
+    const updatedSource = await prisma.sources.update({
+      where: {
+        id: sourceId,
+      },
+      data: {
+        title: title,
+        photos: photos,
+        notes: notes,
+        urls: urls,
+      },
+    });
 
-     // Log the updated source
-     console.log('Updated source:', updatedSource);
+    // Log the updated source
+    console.log('Updated source:', updatedSource);
 
-     // Return the updated source
-     return updatedSource;
-   } catch (error) {
-     // Log any errors that occur during the update process
-     console.error('Error:', error);
+    // Return the updated source
+    return NextResponse.json({
+      data: updatedSource
+    }, {
+      status: 200
+    });
+  } catch (error) {
+    // Log any errors that occur during the update process
+    console.error('Error:', error);
 
-     // Throw an error
-     throw new Error('Error updating source');
-   } finally {
+    // Return an error response with a 500 status code
+    return NextResponse.json({
+      error: 'Error updating source'
+    }, {
+      status: 500
+    });
+  } finally {
 //      Disconnect the Prisma client
-     await prisma.$disconnect();
-   }
- }
+    await prisma.$disconnect();
+  }
+}
 
 export async function DELETE(request: NextRequest) {
   try {

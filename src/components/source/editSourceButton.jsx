@@ -5,13 +5,6 @@ import EditTextForm from '../text/editTextForm'; // Import your form component f
 import EditPhotosForm from '../image/editImageForm'; // Import your form component for editing photos
 import EditUrlsForm from '../url/editUrlForm'; // Import your form component for editing URLs
 import EditAttachmentsForm from '../attachment/editAttachmentForm'; // Import your form component for editing attachments
-/*
-interface EditSourceButtonProps {
-  source: Sources;
-  onClick?: () => void;
-  onMouseEnter?: () => void;
-  onMouseLeave?: () => void;
-}*/
 
 function EditSourceButton({ onClick, source }) {
   const [clicked, setClicked] = useState(false);
