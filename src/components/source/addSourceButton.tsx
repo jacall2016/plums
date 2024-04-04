@@ -11,6 +11,8 @@ import AddTopicButton from '../topic/addTopicButton';
 // Define the prop type for AddSourceButton
 interface AddSourceButtonProps {
   customKey: string; // Define customKey prop
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
 }
 
 function AddSourceButton(props: AddSourceButtonProps) {

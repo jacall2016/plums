@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
-function EditAttachmentForm({ onSubmit, initialData }) {
+function EditImageForm({onSubmit, initialData }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [attachment, setAttachment] = useState('');
+  const [photo, setPhoto] = useState(null);
 
   useEffect(() => {
     if (initialData) {
+      console.log(initialData);
       setTitle(initialData.title || '');
       setDescription(initialData.description || '');
-      setAttachment(initialData.attachments || '');
+      setPhoto(initialData.photos || null);
     }
   }, [initialData]);
 
@@ -21,13 +22,23 @@ function EditAttachmentForm({ onSubmit, initialData }) {
     setDescription(event.target.value);
   };
 
-  const handleAttachmentChange = (event) => {
-    setAttachment(event.target.value);
+  const handlePhotoChange = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+  
+    reader.onloadend = () => {
+      // When the file is loaded, convert it to a base64 string and set the state
+      const fileString = reader.result;
+      setPhoto(fileString);
+    };
+  
+    // Read the file as a data URL (base64 encoded string)
+    reader.readAsDataURL(file);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmit({ title, description, attachments: attachment });
+    onSubmit({ title, description, photo });
   };
 
   return (
@@ -52,18 +63,20 @@ function EditAttachmentForm({ onSubmit, initialData }) {
         />
       </div>
       <div className="mb-4">
-        <label htmlFor="attachment" className="block text-gray-700 font-bold mb-2">Select Attachment:</label>
+        <label htmlFor="image" className="block text-gray-700 font-bold mb-2">Select Image:</label>
         <input
-          type="text"
-          id="attachment"
-          value={attachment}
-          onChange={handleAttachmentChange}
+          type="file"
+          id="image"
+          onChange={handlePhotoChange}
           className="mb-4"
         />
+        {photo && (
+          <img src={photo} alt="Uploaded Image" className="max-w-20 h-auto mb-4" />
+        )}
       </div>
-      <button type="submit" className="bg-purple-800 text-white py-2 px-4 rounded-md hover:bg-purple-800 mt-6">Save Changes</button>
+      <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Save Changes</button>
     </form>
   );
 }
 
-export default EditAttachmentForm;
+export default EditImageForm;

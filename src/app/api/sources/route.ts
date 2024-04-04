@@ -57,19 +57,12 @@ export async function GET(request: NextRequest) {
 
         const url = new URL(request.nextUrl);
         const customKey = url.searchParams.get("topicId");
-
-        // Ensure that topicId is not empty
-
         // Retrieve all sources for the given topic ID
         const sourcesForTopic = await prisma.sources.findMany({
             where: {
                 topicId: customKey,
             },
         });
-
-        // Log the retrieved sources
-
-
         // Return the data in the response along with a 200 status code
         return NextResponse.json({
             data: sourcesForTopic
@@ -92,37 +85,39 @@ export async function GET(request: NextRequest) {
     }
 }
 
-// export async function PUT(req: Request) {
-//   try {
-//     // Update the source with the provided source ID
-//     const updatedSource = await prisma.sources.update({
-//       where: {
-//         id: sourceId,
-//       },
-//       data: {
-//         title: title,
-//         photos: photos,
-//         notes: notes,
-//         urls: urls,
-//       },
-//     });
+export async function PUT(req: Request) {
+   try {
+    const { sourceId, title, photos, notes, urls } = await req.json();
 
-//     // Log the updated source
-//     console.log('Updated source:', updatedSource);
+     // Update the source with the provided source ID
+     const updatedSource = await prisma.sources.update({
+       where: {
+         id: sourceId,
+       },
+       data: {
+         title: title,
+         photos: photos,
+         notes: notes,
+         urls: urls,
+       },
+     });
 
-//     // Return the updated source
-//     return updatedSource;
-//   } catch (error) {
-//     // Log any errors that occur during the update process
-//     console.error('Error:', error);
+     // Log the updated source
+     console.log('Updated source:', updatedSource);
 
-//     // Throw an error
-//     throw new Error('Error updating source');
-//   } finally {
-//     // Disconnect the Prisma client
-//     await prisma.$disconnect();
-//   }
-// }
+     // Return the updated source
+     return updatedSource;
+   } catch (error) {
+     // Log any errors that occur during the update process
+     console.error('Error:', error);
+
+     // Throw an error
+     throw new Error('Error updating source');
+   } finally {
+//      Disconnect the Prisma client
+     await prisma.$disconnect();
+   }
+ }
 
 export async function DELETE(request: NextRequest) {
   try {

@@ -6,6 +6,8 @@ import { Interface } from "readline";
 
 interface AddTextButtonProps {
   customKey: string;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
 }
 
 function AddTextButton(props: AddTextButtonProps) {

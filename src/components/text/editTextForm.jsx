@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { Sources } from '@prisma/client';
 
-function EditAttachmentForm({ onSubmit, initialData }) {
+function EditEditTextForm({ onSubmit, initialData }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [attachment, setAttachment] = useState('');
+  const [notes, setNotes] = useState('');
 
   useEffect(() => {
     if (initialData) {
       setTitle(initialData.title || '');
       setDescription(initialData.description || '');
-      setAttachment(initialData.attachments || '');
+      setNotes(initialData.notes || '');
     }
   }, [initialData]);
 
@@ -21,13 +22,13 @@ function EditAttachmentForm({ onSubmit, initialData }) {
     setDescription(event.target.value);
   };
 
-  const handleAttachmentChange = (event) => {
-    setAttachment(event.target.value);
+  const handleNotesChange = (event) => {
+    setNotes(event.target.value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmit({ title, description, attachments: attachment });
+    onSubmit({ title, description, notes });
   };
 
   return (
@@ -46,24 +47,24 @@ function EditAttachmentForm({ onSubmit, initialData }) {
       <div className="mb-4">
         <label htmlFor="description" className="block text-gray-700 font-bold mb-2">Description:</label>
         <textarea
+          id="description"
           value={description}
           onChange={handleDescriptionChange}
           className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-purple-500"
         />
       </div>
       <div className="mb-4">
-        <label htmlFor="attachment" className="block text-gray-700 font-bold mb-2">Select Attachment:</label>
-        <input
-          type="text"
-          id="attachment"
-          value={attachment}
-          onChange={handleAttachmentChange}
-          className="mb-4"
+        <label htmlFor="notes" className="block text-gray-700 font-bold mb-2">Notes:</label>
+        <textarea
+          id="notes"
+          value={notes}
+          onChange={handleNotesChange}
+          className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-purple-500"
         />
       </div>
-      <button type="submit" className="bg-purple-800 text-white py-2 px-4 rounded-md hover:bg-purple-800 mt-6">Save Changes</button>
+      <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Save Changes</button>
     </form>
   );
 }
 
-export default EditAttachmentForm;
+export default EditEditTextForm;

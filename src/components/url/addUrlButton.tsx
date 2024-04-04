@@ -6,6 +6,8 @@ import UrlForm from './urlForm.jsx'; // Corrected the import statement
 
 interface AddUrlButtonProps {
   customKey: string;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
 }
 
 function AddUrlButton(props: AddUrlButtonProps) {

@@ -1,14 +1,15 @@
 import React from 'react';
 import { Sources } from '@prisma/client';
 import DeleteSourceButton from './deleteSourceButton.jsx';
-import EditSourceButton from './editSourceButton.jsx';
+import EditSourceButton from './editSourceButton';
 
-interface Props {
+interface EditSourceButtonProps {
   source: Sources;
   onDelete: (sourceId: string) => void; // Define the onDelete prop type
+  onEdit: (sourceId: string) => void;
 }
 
-const SourceCard: React.FC<Props> = ({ source, onDelete }) => {
+const SourceCard: React.FC<EditSourceButtonProps> = ({ source, onDelete, onEdit}) => {
   const { id, title, description, photos, urls, notes, attachments } = source;
 
   const handleDelete = () => {
@@ -17,8 +18,14 @@ const SourceCard: React.FC<Props> = ({ source, onDelete }) => {
     }
   };
 
+  const handleEdit = () => {
+    if (onEdit) {
+      onEdit(id);
+    }
+  };
+
   return (
-    <div className="relative h-auto mt-20 w-4/5 p-4 rounded-md overflow-hidden shadow-md hover:scale-105 mx-auto">
+    <div className="z-0 relative h-auto mt-20 w-4/5 p-4 rounded-md overflow-hidden shadow-md mx-auto">
       {/* Image overlay with opacity */}
       <img
         src="/images/plumTopicBox.png"
@@ -27,8 +34,8 @@ const SourceCard: React.FC<Props> = ({ source, onDelete }) => {
       />
       {photos && <img src={photos} alt={photos} className="w-full h-auto z-10 rounded-md" />}
       <div>
-        <div className="mb-3.5 z-20 absolute top-0 left-0 flex items-start rounded-md rounded-br-full bg-white">
-          <EditSourceButton onClick={undefined} />
+        <div className="mb-3.5 z-0 absolute top-0 left-0 flex items-start rounded-md rounded-br-full bg-white">
+          <EditSourceButton  onClick={handleEdit} source={source} />
           <DeleteSourceButton onClick={handleDelete} /> {/* Pass handleDelete */}
         </div>
         <div className="p-4 z-0 pt-12 relative">

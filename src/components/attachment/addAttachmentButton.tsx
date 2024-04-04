@@ -6,6 +6,8 @@ import { Interface } from "readline";
 
 interface AddAttachmentButtonProps {
   customKey: string;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
 }
 
 function AddAttachmentButton(props: AddAttachmentButtonProps) {

@@ -5,6 +5,8 @@ import NewTopicForm from './topicForm'
 
 interface AddTopicButtonProps {
   parentId: string; // Define parentId as a prop
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
 }
 
 const AddTopicButton: React.FC<AddTopicButtonProps> = ({ parentId }) =>{

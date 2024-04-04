@@ -6,6 +6,8 @@ import { Interface } from "readline";
 
 interface AddImageButtonProps {
   customKey: string;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
 }
 
 function AddImageButton(props: AddImageButtonProps) {
