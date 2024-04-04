@@ -38,7 +38,11 @@ const Topic: React.FC<TopicProps> = ({ params }) => {
         <h1 className="text-white text-center text-5xl">{Title}</h1>
         <div className="items-center p-4">
           <div className="p-4">
-            <AddSourceButton customKey={params.customKey} />
+            <AddSourceButton customKey={params.customKey} onMouseEnter={function (): void {
+              throw new Error('Function not implemented.');
+            } } onMouseLeave={function (): void {
+              throw new Error('Function not implemented.');
+            } } />
             {/* <AddTopicButton parentId={params.customKey}/> */}
           </div>
         </div>
