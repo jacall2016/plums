@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import Image from 'next/image';
 import EditTextForm from '../text/editTextForm'; // Import your form component for editing text data

@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { Sources } from '@prisma/client';
 import DeleteSourceButton from './deleteSourceButton.jsx';
