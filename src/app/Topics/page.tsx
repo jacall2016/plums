@@ -40,7 +40,8 @@ export default function Topics() {
         </div>
         
       </div> */}
-        <TopicCardList />
+      <TopicCardList />
+
     </main>
   );
 }
