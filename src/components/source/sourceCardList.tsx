@@ -72,6 +72,23 @@ const SourceList: React.FC<Props> = ({ customKey }) => {
     }
   };
 
+  const handleEdit = async (sourceId: string) => {
+    try {
+      const response = await fetch(`/api/sources/?sourceId=${sourceId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Failed to fetch source for editing');
+      }
+      const data = await response.json();
+    } catch (error) {
+      console.error('Error fetching source for editing:', error);
+    }
+  };
+
   const handleDeleteTopic = async (topicId: string) => {
     try {
       const response = await fetch(`/api/sources/topics/?topicId=${topicId}`, {
@@ -168,9 +185,8 @@ const SourceList: React.FC<Props> = ({ customKey }) => {
           <SourceCard
             key={source.id}
             source={source} // Pass the entire source object
-            onDelete={() => handleDelete(source.id)} onEdit={function (sourceId: string): void {
-              throw new Error('Function not implemented.');
-            } }          />
+            onDelete={() => handleDelete(source.id)}
+            onEdit={() => handleEdit(source.id)}/>
         ))}
       </div>
     </div>

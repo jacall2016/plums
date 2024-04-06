@@ -2,12 +2,16 @@
 import React, { useState, useEffect } from 'react';
 
 function EditAttachmentForm({ onSubmit, initialData }) {
+  const [id, setId] = useState('');
+  const [topicId, setTopicId] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [attachment, setAttachment] = useState('');
+  const [attachments, setAttachment] = useState('');
 
   useEffect(() => {
     if (initialData) {
+      setId(initialData.id || '');
+      setTopicId(initialData.topicId || '');
       setTitle(initialData.title || '');
       setDescription(initialData.description || '');
       setAttachment(initialData.attachments || '');
@@ -28,7 +32,7 @@ function EditAttachmentForm({ onSubmit, initialData }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmit({ title, description, attachments: attachment });
+    onSubmit({ id, topicId, title, description, attachments});
   };
 
   return (
@@ -57,7 +61,7 @@ function EditAttachmentForm({ onSubmit, initialData }) {
         <input
           type="text"
           id="attachment"
-          value={attachment}
+          value={attachments}
           onChange={handleAttachmentChange}
           className="mb-4"
         />

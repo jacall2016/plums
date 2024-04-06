@@ -2,12 +2,16 @@
 import React, { useState, useEffect } from 'react';
 
 function EditUrlForm({ onSubmit, initialData }) {
+  const [id, setId] = useState('');
+  const [topicId, setTopicId] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [url, setUrl] = useState('');
+  const [urls, setUrl] = useState('');
 
   useEffect(() => {
     if (initialData) {
+      setId(initialData.id || '');
+      setTopicId(initialData.topicId || '');
       setTitle(initialData.title || '');
       setDescription(initialData.description || '');
       setUrl(initialData.urls || '');
@@ -28,7 +32,7 @@ function EditUrlForm({ onSubmit, initialData }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmit({ title, description, url });
+    onSubmit({ id, topicId, title, description, urls });
   };
 
   return (
@@ -58,7 +62,7 @@ function EditUrlForm({ onSubmit, initialData }) {
         <input
           type="text"
           id="url"
-          value={url}
+          value={urls}
           onChange={handleUrlChange}
           className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-purple-500"
         />

@@ -2,13 +2,16 @@
 import React, { useState, useEffect } from 'react';
 
 function EditImageForm({onSubmit, initialData }) {
+  const [id, setId] = useState('');
+  const [topicId, setTopicId] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [photo, setPhoto] = useState(null);
+  const [photos, setPhoto] = useState(null);
 
   useEffect(() => {
     if (initialData) {
-      console.log(initialData);
+      setId(initialData.id || '');
+      setTopicId(initialData.topicId || '');
       setTitle(initialData.title || '');
       setDescription(initialData.description || '');
       setPhoto(initialData.photos || null);
@@ -39,7 +42,7 @@ function EditImageForm({onSubmit, initialData }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmit({ title, description, photo });
+    onSubmit({id, topicId, title, description, photos });
   };
 
   return (
@@ -71,8 +74,8 @@ function EditImageForm({onSubmit, initialData }) {
           onChange={handlePhotoChange}
           className="mb-4"
         />
-        {photo && (
-          <img src={photo} alt="Uploaded Image" className="max-w-20 h-auto mb-4" />
+        {photos && (
+          <img src={photos} alt="Uploaded Image" className="max-w-20 h-auto mb-4" />
         )}
       </div>
       <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Save Changes</button>

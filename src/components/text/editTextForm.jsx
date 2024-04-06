@@ -3,12 +3,16 @@ import React, { useState, useEffect } from 'react';
 import { Sources } from '@prisma/client';
 
 function EditEditTextForm({ onSubmit, initialData }) {
+  const [id, setId] = useState('');
+  const [topicId, setTopicId] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [notes, setNotes] = useState('');
 
   useEffect(() => {
     if (initialData) {
+      setId(initialData.id || '');
+      setTopicId(initialData.topicId || '');
       setTitle(initialData.title || '');
       setDescription(initialData.description || '');
       setNotes(initialData.notes || '');
@@ -29,7 +33,7 @@ function EditEditTextForm({ onSubmit, initialData }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmit({ title, description, notes });
+    onSubmit({id, topicId, title, description, notes });
   };
 
   return (

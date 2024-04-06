@@ -87,18 +87,20 @@ export async function GET(request: NextRequest) {
 
 export async function PUT(req: Request) {
   try {
-   const { sourceId, title, photos, notes, urls } = await req.json();
+   const { id, title, description, photos, notes, urls, attachments } = await req.json();
 
     // Update the source with the provided source ID
     const updatedSource = await prisma.sources.update({
       where: {
-        id: sourceId,
+        id: id,
       },
       data: {
         title: title,
+        description: description,
         photos: photos,
         notes: notes,
         urls: urls,
+        attachments: attachments
       },
     });
 

@@ -29,7 +29,7 @@ function ImageForm({ onSubmit }) {
   };
 
   const handleSubmit = () => {
-    onSubmit({ photos, title, description });
+    onSubmit({ title, description, photos });
     setTitle('');
     setDescription('');
     setPhoto(null);

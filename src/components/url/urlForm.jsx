@@ -19,7 +19,7 @@ function UrlForm({ onSubmit }) {
   };
 
   const handleSubmit = () => {
-    onSubmit({ urls, title, description });
+    onSubmit({ title, description, urls });
     setTitle('');
     setDesription('');
     setUrl('');

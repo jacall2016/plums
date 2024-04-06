@@ -24,7 +24,6 @@ function EditSourceButton({ onClick, source }) {
 
     // Show the appropriate form based on the source data
     if (source) {
-      //console.log(source);
       if (source.photos) {
         setFormType('photos');
       } else if (source.notes) {
@@ -55,8 +54,9 @@ function EditSourceButton({ onClick, source }) {
         throw new Error('Failed to update source');
       }
       const data = await response.json();
-      // Optionally update the state or do any other actions after successful update
-      console.log('Source updated:', data);
+      
+      //window.location.reload();
+
       toggleFormVisibility();
     } catch (error) {
       console.error('Error updating source:', error);
