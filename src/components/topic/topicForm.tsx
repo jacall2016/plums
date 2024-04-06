@@ -60,7 +60,7 @@ const NewTopicForm: React.FC<NewTopicFormProps> = ({ onSubmit, parentId = null }
     setSelectedCategories((prevSelected) => prevSelected.filter((id) => id !== categoryId));
   };
   return (
-    <div className="flex justify-center items-center h-full">
+    <div className="flex justify-center items-center h-full text-black">
       <form onSubmit={handleSubmit} className="bg-gray-200 p-6 rounded-lg shadow-md">
         {/* Hidden field for parentId */}
         <input type="hidden" name="parentId" value={parentId || ''} />

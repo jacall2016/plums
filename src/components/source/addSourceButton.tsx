@@ -23,7 +23,7 @@ function AddSourceButton(props: AddSourceButtonProps) {
   const [showUrlButtonForm, setShowUrlButtonForm] = useState(false);
 
   return (
-    <div className="relative inline-block">
+    <div className="relative inline-block text-left">
       <div className="flex flex-row">
         <AddTopicButton parentId={props.customKey} onMouseEnter={() => setShowTopicButtonForm(true)} onMouseLeave={() => setShowTopicButtonForm(false)} />
         <AddImageButton customKey={props.customKey} onMouseEnter={() => setShowImageButtonForm(true)} onMouseLeave={() => setShowImageButtonForm(false)} />

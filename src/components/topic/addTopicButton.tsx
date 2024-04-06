@@ -64,19 +64,19 @@ const AddTopicButton: React.FC<AddTopicButtonProps> = ({ parentId }) =>{
       </button>
 
       {showForm && (
-        <div className="text-black bg-white rounded-md shadow-md">
+        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 w-80 bg-white p-4 rounded-md shadow-md overflow-y-auto max-h-80 overflow-x-hidden">
           <Image
-          className="absolute left-64 ml-2 -top-0"
-          onClick={toggleFormVisibility}
-          src="/images/x-icon.svg"
-          alt="exit icon"
-          width={40}
-          height={40}>
-
-          </Image>
-          <NewTopicForm onSubmit={handleFormSubmit}  parentId={parentId} />
+            className="absolute left-64 ml-2 -top-0"
+            onClick={toggleFormVisibility}
+            src="/images/x-icon.svg"
+            alt="exit icon"
+            width={40}
+            height={40}
+          />
+          <NewTopicForm onSubmit={handleFormSubmit} parentId={parentId} />
         </div>
       )}
+
     </div>
   );
 }

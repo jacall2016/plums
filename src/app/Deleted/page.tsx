@@ -8,7 +8,7 @@ export default function Deleted() {
 
 
   return (
-    <main className="flex flex-col items-center justify-center h-screen">
+    <main className="flex flex-col items-center justify-center h-auto mt-20">
       <DeletedTopicList/>
     </main>
   );
