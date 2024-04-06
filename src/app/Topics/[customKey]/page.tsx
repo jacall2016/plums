@@ -46,7 +46,7 @@ const Topic: React.FC<TopicProps> = ({ params }) => {
             {/* <AddTopicButton parentId={params.customKey}/> */}
           </div>
         </div>
-        <div className="items-center">
+        <div className="items-center mx-16">
           <SourceList customKey={params.customKey} />
         </div>
       </div>
